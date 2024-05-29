@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DatabaseTest;
+namespace SCs_Project_Master.Source.Logic;
 
 public partial class Employee
 {

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
-namespace DatabaseTest;
+namespace SCs_Project_Master.Source.Logic;
 
-public partial class JpfeiferContext : DbContext
+public partial class DatabaseContext : DbContext
 {
-    public JpfeiferContext()
+    public DatabaseContext()
     {
     }
 
-    public JpfeiferContext(DbContextOptions<JpfeiferContext> options)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
     {
     }
@@ -201,9 +201,9 @@ public partial class JpfeiferContext : DbContext
             entity.Property(e => e.Position)
                 .HasColumnType("int(11)")
                 .HasColumnName("position");
-            entity.Property(e => e.CostPerUnit)
+            entity.Property(e => e.UnitPrice)
                 .HasPrecision(12, 2)
-                .HasColumnName("cost_per_unit");
+                .HasColumnName("unit_price");
             entity.Property(e => e.Name)
                 .HasMaxLength(256)
                 .HasColumnName("name");

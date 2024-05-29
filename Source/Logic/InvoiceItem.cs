@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DatabaseTest;
+namespace SCs_Project_Master.Source.Logic;
 
 public partial class InvoiceItem
 {
@@ -13,7 +13,7 @@ public partial class InvoiceItem
 
     public decimal? Units { get; set; }
 
-    public decimal? CostPerUnit { get; set; }
+    public decimal? UnitPrice { get; set; }
 
     public virtual Invoice InvoiceNumberNavigation { get; set; } = null!;
 }
