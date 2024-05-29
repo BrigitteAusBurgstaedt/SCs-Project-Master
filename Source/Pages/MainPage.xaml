@@ -1,7 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SCs_Project_Master.MainPage">
+             x:Class="SCs_Project_Master.MainPage"
+             Title="SCs Project Master"
+             xmlns:vm="clr-namespace:SCs_Project_Master.Source.Logic"
+             x:DataType="vm:Project">
+
+    <TableView Intent="Data">
+        <TableRoot>
+            <TableSection Title="Projektbasisinformationen">
+                <TextCell Text="Name" Detail="{Binding Name}" />
+                <TextCell Text="Typ" Detail="{Binding Type}" />
+                <TextCell Text="Kategorie" Detail="{Binding Categorie}" />
+                <TextCell Text="Startdatum" Detail="{Binding StartDate}" />
+            </TableSection>
+        </TableRoot>
+    </TableView>
 
     <ScrollView>
         <VerticalStackLayout
