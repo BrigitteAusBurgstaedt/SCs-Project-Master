@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SCs_Project_Master.Source.Logic;
+namespace SCs_Project_Master.Source.Models;
 
 public partial class Stopwatch
 {
     public int Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     public int ProjectId { get; set; }
 

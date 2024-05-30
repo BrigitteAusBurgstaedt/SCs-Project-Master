@@ -1,4 +1,5 @@
 ﻿using SCs_Project_Master.Source.Logic;
+using SCs_Project_Master.Source.Models.ViewModels;
 
 namespace SCs_Project_Master;
 
@@ -10,18 +11,11 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        BindingContext = new DatabaseContext().Projects.OrderBy(b => b.Id).First();
-    }
+        var mainPaigeViewModel = new MainPaigeViewModel
+        {
+            Project = new DatabaseContext().Projects.OrderBy(b => b.Id).First()
+        };
 
-    private void OnCounterClicked(object sender, EventArgs e)
-    {
-        count++;
-
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        BindingContext = mainPaigeViewModel;
     }
 }

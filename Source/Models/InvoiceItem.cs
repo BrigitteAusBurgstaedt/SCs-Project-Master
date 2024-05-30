@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SCs_Project_Master.Source.Logic;
+namespace SCs_Project_Master.Source.Models;
 
 public partial class InvoiceItem
 {
@@ -9,7 +9,7 @@ public partial class InvoiceItem
 
     public int Position { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     public decimal? Units { get; set; }
 

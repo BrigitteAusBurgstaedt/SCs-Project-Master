@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SCs_Project_Master.Source.Logic;
+namespace SCs_Project_Master.Source.Models;
 
 public partial class Employee
 {
@@ -11,9 +11,9 @@ public partial class Employee
 
     public string PasswordSalt { get; set; } = null!;
 
-    public string? FirstName { get; set; }
+    public string FirstName { get; set; }
 
-    public string? LastName { get; set; }
+    public string LastName { get; set; }
 
     public string PhoneNumber { get; set; } = null!;
 
