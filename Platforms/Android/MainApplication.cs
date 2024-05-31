@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace SCs_Project_Master
+namespace SCsProjectMaster
 {
     [Application]
     public class MainApplication : MauiApplication

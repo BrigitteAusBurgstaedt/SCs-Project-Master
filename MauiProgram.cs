@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
-namespace SCs_Project_Master
+namespace SCsProjectMaster
 {
     public static class MauiProgram
     {

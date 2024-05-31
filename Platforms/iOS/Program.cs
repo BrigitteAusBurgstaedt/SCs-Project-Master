@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace SCs_Project_Master
+namespace SCsProjectMaster
 {
     public class Program
     {

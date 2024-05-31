@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SCs_Project_Master.Source.Models;
+namespace SCsProjectMaster.Source.Models;
 
 public partial class TimeStopped
 {

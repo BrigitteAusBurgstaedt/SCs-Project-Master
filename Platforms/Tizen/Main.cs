@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace SCs_Project_Master
+namespace SCsProjectMaster
 {
     internal class Program : MauiApplication
     {

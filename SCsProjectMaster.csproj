@@ -6,13 +6,13 @@
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
-		<RootNamespace>SCs_Project_Master</RootNamespace>
+		<RootNamespace>SCsProjectMaster</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>SCs Project Master</ApplicationTitle>
+		<ApplicationTitle>SCsProjectMaster</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.scs_project_master</ApplicationId>

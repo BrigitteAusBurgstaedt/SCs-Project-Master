@@ -1,1 +1,1 @@
-# SCs Project Master
+# SCsProjectMaster

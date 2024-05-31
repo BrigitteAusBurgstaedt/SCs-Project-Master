@@ -1,21 +1,31 @@
-﻿using SCs_Project_Master.Source.Logic;
-using SCs_Project_Master.Source.Models.ViewModels;
+﻿using SCsProjectMaster.Source.Models.ViewModels;
+using SCsProjectMaster.Source.Models;
+using System.Collections.ObjectModel;
 
-namespace SCs_Project_Master;
+namespace SCsProjectMaster;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
-
     public MainPage()
     {
         InitializeComponent();
 
+        var test = new ObservableCollection<Project>
+        {
+            new DatabaseContext().Projects.OrderBy(b => b.Id).First()
+        };
+
         var mainPaigeViewModel = new MainPaigeViewModel
         {
-            Project = new DatabaseContext().Projects.OrderBy(b => b.Id).First()
+            Projects = test
         };
 
         BindingContext = mainPaigeViewModel;
+
+    }
+
+    private async void NotImplementedWarning(object sender, EventArgs e)
+    {
+        await DisplayAlert("Obacht!", "Diese Funktion wurde nocht nicht implementiert", "OK");
     }
 }

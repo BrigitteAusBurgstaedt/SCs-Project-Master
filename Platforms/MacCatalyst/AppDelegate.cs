@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace SCs_Project_Master
+namespace SCsProjectMaster
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

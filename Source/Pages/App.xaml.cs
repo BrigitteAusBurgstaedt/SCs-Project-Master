@@ -1,4 +1,4 @@
-﻿namespace SCs_Project_Master;
+﻿namespace SCsProjectMaster;
 
 public partial class App : Application
 {
@@ -6,6 +6,6 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        MainPage = new MainPage();
+        MainPage = new AppShell();
     }
 }

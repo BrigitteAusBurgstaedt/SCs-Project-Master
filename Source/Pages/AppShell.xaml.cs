@@ -1,4 +1,4 @@
-﻿namespace SCs_Project_Master;
+﻿namespace SCsProjectMaster;
 
 public partial class AppShell : Shell
 {
