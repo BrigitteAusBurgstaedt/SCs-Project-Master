@@ -7,6 +7,11 @@ namespace SCsProjectMaster
     {
         public static MauiApp CreateMauiApp()
         {
+            Preferences.Default.Set("ConnectionString", "data source = wdb2.hs-mittweida.de; initial catalog = jpfeifer; user id = jpfeifer; password = Naen^oyee9ah");
+            Preferences.Default.Set("ServerVersion", "10.3.39-mariadb");
+            // TODO: Use SecureStorage
+            // await SecureStorage.Default.SetAsync("ConnectionString", "data source = wdb2.hs - mittweida.de; initial catalog = jpfeifer; user id = jpfeifer; password = Naen ^ oyee9ah");
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()

@@ -62,4 +62,31 @@
 		<PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Source\Views\AddCustomerView.xaml.cs">
+	    <DependentUpon>AddCustomerView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Source\Views\MainView.xaml.cs">
+	    <DependentUpon>MainView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Source\Views\SettingsView.xaml.cs">
+	    <DependentUpon>SettingsView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Source\Views\ShowCustomersView.xaml.cs">
+	    <DependentUpon>ShowCustomersView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Source\Views\AddCustomerView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Views\SettingsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Views\ShowCustomersView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
