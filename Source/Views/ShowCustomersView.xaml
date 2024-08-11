@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
+             xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
+             x:Class="SCsProjectMaster.Source.Views.ShowCustomersView"
+             x:DataType="vm:ShowCustomersViewModel"
+             Title="ShowCustomersPage">
+    <VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding Customers}" 
+                            Header="Kunden" 
+                            SelectionMode="Single"
+                            SelectedItem="" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" x:DataType="{x:Type models:Customer}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold" />
+                        <Label Grid.Column="1" Text="{Binding WebsiteUri}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button
+            Text="Änderungen speichern"
+            Command="{Binding SaveChangesCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

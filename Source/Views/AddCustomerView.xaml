@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCsProjectMaster.Source.Views.AddCustomerView"
+             xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
+             x:DataType="vm:AddCustomerViewModel"
+             Title="Kunde hinzufügen">
+    <VerticalStackLayout>
+        <Entry
+            Placeholder="Name"
+            Text="{Binding Customer.Name}"/>
+
+        <Entry
+            Placeholder="Priorität"
+            Text="{Binding Customer.Priority}"/>
+
+        <Entry
+            Placeholder="Website URI"
+            Text="{Binding Customer.WebsiteUri}"/>
+
+        <Entry
+            Placeholder="Telefonnummer" 
+            Text="{Binding Customer.PhoneNumber}"/>
+
+        <Entry
+            Placeholder="E-Mail Adresse" 
+            Text="{Binding Customer.EMailAddress}"/>
+
+        <Entry
+            Placeholder="1. Adresszeile"
+            Text="{Binding Address.AddressLine1}"/>
+
+        <Entry
+            x:Name="addressLine2Entry"
+            Placeholder="2. Adresszeile"
+            Text="{Binding Address.AddressLine2}"/>
+
+        <Entry
+            Placeholder="3. Adresszeile"
+            Text="{Binding Address.AddressLine3}"/>
+
+        <Entry
+            Placeholder="Straße"
+            Text="{Binding Address.Street}"/>
+
+        <Entry
+            Placeholder="Hausnummer"
+            Text="{Binding Address.HouseNumber}"/>
+
+        <Entry
+            Placeholder="Stadt"
+            Text="{Binding Address.City}"/>
+
+        <Button
+            Text="Kunde Hinzufügen"
+            Command="{Binding SaveChangesCommand}"/>
+
+
+    </VerticalStackLayout>
+</ContentPage>
