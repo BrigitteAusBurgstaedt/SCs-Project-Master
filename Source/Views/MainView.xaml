@@ -4,105 +4,102 @@
              x:Class="SCsProjectMaster.Source.Views.MainView"
              xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
              xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
-             x:DataType="vm:MainViewModel" > 
+             x:DataType="vm:MainViewModel">
 
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Projekt">
-            <MenuFlyoutItem
-                Text="Neu"
-                Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Neu"
+                            Clicked="NotImplementedWarning" />
 
-            <MenuFlyoutItem
-                Text="Öffnen"
-                Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Öffnen"
+                            Clicked="NotImplementedWarning" />
 
-            <MenuFlyoutSeparator/>
+            <MenuFlyoutSeparator />
 
-            <MenuFlyoutItem
-                Text="Speichern"
-                Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Speichern"
+                            Clicked="NotImplementedWarning" />
 
-            <MenuFlyoutItem
-                Text="Speichern unter"
-                Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Speichern unter"
+                            Clicked="NotImplementedWarning" />
 
-            <MenuFlyoutSeparator/>
+            <MenuFlyoutSeparator />
 
-            <MenuFlyoutItem
-                Text="Rechnung erstellen"
-                Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Rechnung erstellen"
+                            Clicked="NotImplementedWarning" />
 
-            <MenuFlyoutSeparator/>
+            <MenuFlyoutSeparator />
 
-            <MenuFlyoutItem
-                Text="Einstellungen"
-                Clicked="OnSettingsClicked" />
+            <MenuFlyoutItem Text="Einstellungen"
+                            Clicked="OnSettingsClicked" />
 
         </MenuBarItem>
 
         <MenuBarItem Text="Kunden">
-            <MenuFlyoutItem
-                Text="Kunde hinzufügen"
-                Clicked="OnAddCustomerClicked" />
+            <MenuFlyoutItem Text="Kunde hinzufügen"
+                            Clicked="OnAddCustomerClicked" />
 
-            <MenuFlyoutItem
-                Text="Kunden anzeigen"
-                Clicked="OnShowCustomersClicked" />
+            <MenuFlyoutItem Text="Kunden anzeigen"
+                            Clicked="OnShowCustomersClicked" />
 
-            <MenuFlyoutItem
-                Text="Kunde bearbeiten"
-                Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Kunde bearbeiten"
+                            Clicked="NotImplementedWarning" />
 
         </MenuBarItem>
     </ContentPage.MenuBarItems>
-    
-    <ScrollView>
-        <HorizontalStackLayout
-            Spacing="25"
-            Padding="30"
-            HorizontalOptions="Start">
 
-            <CollectionView ItemsSource="{Binding Projects}" 
-                            Header="Projekte" 
+    <ScrollView>
+        <VerticalStackLayout Spacing="25"
+                             Padding="30"
+                             HorizontalOptions="Start">
+
+            <Label Text="{Binding Error.Message}"
+                   TextColor="DarkRed"
+                   IsVisible="{Binding Error.HasMessage}" />
+
+            <Label Text="{Binding Status.Message}"
+                   TextColor="DarkGreen"
+                   IsVisible="{Binding Status.HasMessage}" />
+
+            <CollectionView ItemsSource="{Binding Projects}"
+                            Header="Projekte"
                             SelectionMode="Single"
-                            SelectedItem="{Binding Project}" >
+                            SelectedItem="{Binding Project}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="10" x:DataType="{x:Type models:Project}">
+                        <Grid Padding="10"
+                              x:DataType="{x:Type models:Project}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-
-                            <Image Source="dotnet_bot.svg"
-                                   HeightRequest="60"
-                                   WidthRequest="60"
-                                   VerticalOptions="Center" />
-                            <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" />
-                            <Label Grid.Column="2" Text="{Binding Categorie}" />
+                            <Label Grid.Column="0"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding Categorie}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <VerticalStackLayout>
-                <Label Text="Detailinformationen für Projekt:" 
-                       FontSize="18" />
-                <Label Text="{Binding Project.Name}" 
-                       FontSize="18" 
-                       FontAttributes="Bold" />
+            <VerticalStackLayout IsVisible="{Binding HasProject}">
+                <Label Text="{Binding Path=Project.Name, StringFormat='Detailinformationen: {0}'}"
+                       FontSize="Micro" />
                 <TableView Intent="Data">
-                <TableRoot>
-                    <TableSection>
-                        <TextCell Text="Typ" Detail="{Binding Project.Type}" />
-                        <TextCell Text="Kategorie" Detail="{Binding Project.Categorie}" />
-                        <TextCell Text="Startdatum" Detail="{Binding Project.StartDate}" />
-                        <TextCell Text="Deadline" Detail="{Binding Project.Deadline}" />
-                    </TableSection>
-                </TableRoot>
-            </TableView>
+                    <TableRoot>
+                        <TableSection>
+                            <TextCell Text="Typ"
+                                      Detail="{Binding Project.Type}" />
+                            <TextCell Text="Kategorie"
+                                      Detail="{Binding Project.Categorie}" />
+                            <TextCell Text="Startdatum"
+                                      Detail="{Binding Project.StartDate}" />
+                            <TextCell Text="Deadline"
+                                      Detail="{Binding Project.Deadline}" />
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
             </VerticalStackLayout>
-        </HorizontalStackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
