@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+
 namespace SCsProjectMaster.Source.Models.ViewModels;
 
 internal partial class ShowCustomersViewModel : ObservableObject
@@ -18,11 +19,9 @@ internal partial class ShowCustomersViewModel : ObservableObject
     [RelayCommand]
     private void SaveChanges()
     {
-        using (var db = new DatabaseContext())
-        {
-            db.Customers.UpdateRange(Customers);
-            db.SaveChanges();
-        }
+        using DatabaseContext db = new();
+        db.Customers.UpdateRange(Customers);
+        db.SaveChanges();
     }
 }
 
