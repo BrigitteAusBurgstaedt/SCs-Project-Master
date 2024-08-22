@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SCsProjectMaster.Source.Views.AddProjectView"
+        xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
+        xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
+        xmlns:converter="clr-namespace:SCsProjectMaster.Source.Logic.Converter" x:DataType="vm:AddProjectViewModel"
+        Title="Projekt hinzufügen">
+
+    <ContentPage.Resources>
+        <converter:DateOnlyToDateTimeConverter x:Key="dateOnlyToDateTime" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20">
+            <Label Grid.Row="0" Text="{Binding Error.Message}" TextColor="DarkRed"
+                    IsVisible="{Binding Error.HasMessage}" />
+            <Label Grid.Row="1" Text="{Binding Status.Message}" TextColor="DarkGreen"
+                    IsVisible="{Binding Status.HasMessage}" />
+            <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
+                    ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
+                <Label Grid.Row="0" Grid.Column="0" Text="Projektname*:" />
+                <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Project.Name}" />
+                <Label Grid.Row="1" Grid.Column="0" Text="Typ:" />
+                <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Configuration.Types}"
+                        SelectedItem="{Binding Project.Type}" />
+                <Label Grid.Row="2" Grid.Column="0" Text="Kategorie:" />
+                <Picker Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Keys}"
+                        SelectedItem="{Binding Project.Categorie}" />
+                <Label Grid.Row="3" Grid.Column="0" Text="Startdatum:" />
+                <DatePicker Grid.Row="3" Grid.Column="1"
+                        Date="{Binding Project.StartDate, Converter={StaticResource dateOnlyToDateTime}}" />
+                <Label Grid.Row="4" Grid.Column="0" Text="Deadline:" />
+                <DatePicker Grid.Row="4" Grid.Column="1"
+                        Date="{Binding Project.Deadline, Converter={StaticResource dateOnlyToDateTime}}" />
+                <Label Grid.Row="5" Grid.Column="0" Text="Workload in Std.:" />
+                <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Project.TotalWorkload}" />
+                <Label Grid.Row="6" Grid.Column="0" Text="Kunde*:" />
+                <Picker Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Customers}"
+                        SelectedItem="{Binding SelectedCustomer}" ItemDisplayBinding="{Binding Name}" />
+                <Label Grid.Row="7" Grid.Column="0" Text="Ansprechpartner*:" />
+                <Picker Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Employees}"
+                        SelectedItem="{Binding SelectedEmployee}">
+                    <Picker.ItemDisplayBinding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="FirstName" />
+                            <Binding Path="LastName" />
+                        </MultiBinding>
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+            </Grid>
+            <Label Grid.Row="3" Grid.Column="0" Text="Projektteam:" />
+            <CollectionView Grid.Row="4" ItemsSource="{Binding Employees}" SelectionMode="Multiple"
+                    SelectedItems="{Binding SelectedEmployees}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout x:DataType="{x:Type models:Employee}">
+                            <Label>
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="FirstName" />
+                                        <Binding Path="LastName" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Grid.Row="5" Grid.Column="0" Text="Sonstige Informationen:" />
+            <Editor Grid.Row="6" Grid.Column="0" Text="{Binding Project.OtherInformation}" AutoSize="TextChanges" />
+            <Button Grid.Row="7" Text="Hinzufügen" Command="{Binding AddCommand}" />
+        </Grid>
+    </ScrollView>
+</ContentPage>
