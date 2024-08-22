@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SCsProjectMaster.Source.Views.AddEmployeeView"
+        xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels" x:DataType="vm:AddEmployeeViewModel"
+        Title="Mitarbeiter hinzufügen">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
+                    ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="Login*:" />
+                <Entry VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Employee.Login}" />
+                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="Password:" />
+                <Entry VerticalOptions="Center" Grid.Row="1" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Password}" IsPassword="True" />
+                <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="Vorname:" />
+                <Entry VerticalOptions="Center" Grid.Row="2" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Employee.FirstName}" />
+                <Label VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="Nachname:" />
+                <Entry VerticalOptions="Center" Grid.Row="3" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Employee.LastName}" />
+                <Label VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="Telefonnummer*:" />
+                <Entry VerticalOptions="Center" Grid.Row="4" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Employee.PhoneNumber}" />
+                <Label VerticalOptions="Center" Grid.Row="5" Grid.Column="0" Text="1. Adresszeile:" />
+                <Entry VerticalOptions="Center" Grid.Row="5" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.AddressLine1}" />
+                <Label VerticalOptions="Center" Grid.Row="6" Grid.Column="0" Text="2. Adresszeile:" />
+                <Entry VerticalOptions="Center" Grid.Row="6" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.AddressLine2}" />
+                <Label VerticalOptions="Center" Grid.Row="7" Grid.Column="0" Text="3. Adresszeile:" />
+                <Entry VerticalOptions="Center" Grid.Row="7" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.AddressLine3}" />
+                <Label VerticalOptions="Center" Grid.Row="8" Grid.Column="0" Text="Straße:" />
+                <Entry VerticalOptions="Center" Grid.Row="8" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Address.Street}" />
+                <Label VerticalOptions="Center" Grid.Row="9" Grid.Column="0" Text="Hausnummer:" />
+                <Entry VerticalOptions="Center" Grid.Row="9" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.HouseNumber}" />
+                <Label VerticalOptions="Center" Grid.Row="10" Grid.Column="0" Text="Stadt:" />
+                <Entry VerticalOptions="Center" Grid.Row="10" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Address.City}" />
+            </Grid>
+
+            <Label Text="{Binding Error.Message}" TextColor="DarkRed"
+                    IsVisible="{Binding Error.HasMessage}" />
+            <Label Text="{Binding Status.Message}" TextColor="DarkGreen"
+                    IsVisible="{Binding Status.HasMessage}" />
+            <Button Grid.Row="11" Text="Mitarbeiter Hinzufügen" Command="{Binding SaveChangesCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
