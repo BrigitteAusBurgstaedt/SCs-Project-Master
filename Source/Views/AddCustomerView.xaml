@@ -1,60 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SCsProjectMaster.Source.Views.AddCustomerView"
-             xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
-             x:DataType="vm:AddCustomerViewModel"
-             Title="Kunde hinzufügen">
-    <VerticalStackLayout>
-        <Entry
-            Placeholder="Name"
-            Text="{Binding Customer.Name}"/>
-
-        <Entry
-            Placeholder="Priorität"
-            Text="{Binding Customer.Priority}"/>
-
-        <Entry
-            Placeholder="Website URI"
-            Text="{Binding Customer.WebsiteUri}"/>
-
-        <Entry
-            Placeholder="Telefonnummer" 
-            Text="{Binding Customer.PhoneNumber}"/>
-
-        <Entry
-            Placeholder="E-Mail Adresse" 
-            Text="{Binding Customer.EMailAddress}"/>
-
-        <Entry
-            Placeholder="1. Adresszeile"
-            Text="{Binding Address.AddressLine1}"/>
-
-        <Entry
-            x:Name="addressLine2Entry"
-            Placeholder="2. Adresszeile"
-            Text="{Binding Address.AddressLine2}"/>
-
-        <Entry
-            Placeholder="3. Adresszeile"
-            Text="{Binding Address.AddressLine3}"/>
-
-        <Entry
-            Placeholder="Straße"
-            Text="{Binding Address.Street}"/>
-
-        <Entry
-            Placeholder="Hausnummer"
-            Text="{Binding Address.HouseNumber}"/>
-
-        <Entry
-            Placeholder="Stadt"
-            Text="{Binding Address.City}"/>
-
-        <Button
-            Text="Kunde Hinzufügen"
-            Command="{Binding SaveChangesCommand}"/>
-
-
-    </VerticalStackLayout>
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SCsProjectMaster.Source.Views.AddCustomerView"
+        xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels" x:DataType="vm:AddCustomerViewModel"
+        Title="Kunde hinzufügen">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="{Binding Error.Message}" TextColor="DarkRed" IsVisible="{Binding Error.HasMessage}" />
+            <Label Text="{Binding Status.Message}" TextColor="DarkGreen" IsVisible="{Binding Status.HasMessage}" />
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
+                    ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="Name:" />
+                <Entry VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Customer.Name}" />
+                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="Priorität:" />
+                <Entry VerticalOptions="Center" Grid.Row="1" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Customer.Priority}" />
+                <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="Website URI:" />
+                <Entry VerticalOptions="Center" Grid.Row="2" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Customer.WebsiteUri}" />
+                <Label VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="Telefonnummer:" />
+                <Entry VerticalOptions="Center" Grid.Row="3" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Customer.PhoneNumber}" />
+                <Label VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="E-Mail Adresse:" />
+                <Entry VerticalOptions="Center" Grid.Row="4" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Customer.EMailAddress}" />
+                <Label VerticalOptions="Center" Grid.Row="5" Grid.Column="0" Text="1. Adresszeile:" />
+                <Entry VerticalOptions="Center" Grid.Row="5" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.AddressLine1}" />
+                <Label VerticalOptions="Center" Grid.Row="6" Grid.Column="0" Text="2. Adresszeile:" />
+                <Entry VerticalOptions="Center" Grid.Row="6" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.AddressLine2}" />
+                <Label VerticalOptions="Center" Grid.Row="7" Grid.Column="0" Text="3. Adresszeile:" />
+                <Entry VerticalOptions="Center" Grid.Row="7" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.AddressLine3}" />
+                <Label VerticalOptions="Center" Grid.Row="8" Grid.Column="0" Text="Straße:" />
+                <Entry VerticalOptions="Center" Grid.Row="8" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Address.Street}" />
+                <Label VerticalOptions="Center" Grid.Row="9" Grid.Column="0" Text="Hausnummer:" />
+                <Entry VerticalOptions="Center" Grid.Row="9" Grid.Column="1" Placeholder="Bitte Text eingeben"
+                        Text="{Binding Address.HouseNumber}" />
+                <Label VerticalOptions="Center" Grid.Row="10" Grid.Column="0" Text="Stadt:" />
+                <Entry VerticalOptions="Center" Grid.Row="10" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Address.City}" />
+            </Grid>
+            <Button Grid.Row="11" Text="Kunde Hinzufügen" Command="{Binding SaveChangesCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
