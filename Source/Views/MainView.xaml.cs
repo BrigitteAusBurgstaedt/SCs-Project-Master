@@ -19,10 +19,19 @@ public partial class MainView : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(AddCustomerView));
     }
+    private async void OnAddEmployeeClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(AddEmployeeView));
+    }
 
     private async void OnShowCustomersClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(ShowCustomersView));
+    }
+
+    private async void OnAddProjectClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(AddProjectView));
     }
 
     private async void NotImplementedWarning(object sender, EventArgs e)

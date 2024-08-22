@@ -51,6 +51,7 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -63,6 +64,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Source\Views\AddEmployeeView.xaml.cs">
+	    <DependentUpon>AddEmployeeView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Source\Views\AddCustomerView.xaml.cs">
 	    <DependentUpon>AddCustomerView.xaml</DependentUpon>
 	  </Compile>
@@ -78,7 +82,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Source\Views\AddEmployeeView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Source\Views\AddCustomerView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Views\AddProjectView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Source\Views\SettingsView.xaml">

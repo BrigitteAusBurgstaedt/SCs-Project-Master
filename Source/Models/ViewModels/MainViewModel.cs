@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.Input;
 
 namespace SCsProjectMaster.Source.Models.ViewModels;
 
@@ -33,6 +34,25 @@ internal partial class MainViewModel : ObservableObject
         {
             Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
         }
+    }
+
+    [RelayCommand]
+    private void SaveChanges()
+    {
+        Status.Message = "";
+        Error.Message = "";
+
+        using DatabaseContext db = new();
+        try
+        {
+            db.Update(Project);
+            db.SaveChanges();
+            Status.Message = "Änderung gespeichert";
+        }
+        catch (Exception)
+        {
+            Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
+        }        
     }
 
     partial void OnProjectChanged(Project value)

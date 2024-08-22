@@ -1,105 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SCsProjectMaster.Source.Views.MainView"
-             xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
-             xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
-             x:DataType="vm:MainViewModel">
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SCsProjectMaster.Source.Views.MainView"
+        xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
+        xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
+        xmlns:converter="clr-namespace:SCsProjectMaster.Source.Logic.Converter" x:DataType="vm:MainViewModel">
+
+    <ContentPage.Resources>
+        <converter:DateOnlyToDateTimeConverter x:Key="dateOnlyToDateTime" />
+    </ContentPage.Resources>
 
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Projekt">
-            <MenuFlyoutItem Text="Neu"
-                            Clicked="NotImplementedWarning" />
-
-            <MenuFlyoutItem Text="Öffnen"
-                            Clicked="NotImplementedWarning" />
-
+            <MenuFlyoutItem Text="Projekt hinzufügen" Clicked="OnAddProjectClicked" />
+            <MenuFlyoutItem Text="Öffnen" Clicked="NotImplementedWarning" />
             <MenuFlyoutSeparator />
-
-            <MenuFlyoutItem Text="Speichern"
-                            Clicked="NotImplementedWarning" />
-
-            <MenuFlyoutItem Text="Speichern unter"
-                            Clicked="NotImplementedWarning" />
-
+            <MenuFlyoutItem Text="Speichern" Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Speichern unter" Clicked="NotImplementedWarning" />
             <MenuFlyoutSeparator />
-
-            <MenuFlyoutItem Text="Rechnung erstellen"
-                            Clicked="NotImplementedWarning" />
-
+            <MenuFlyoutItem Text="Rechnung erstellen" Clicked="NotImplementedWarning" />
             <MenuFlyoutSeparator />
-
-            <MenuFlyoutItem Text="Einstellungen"
-                            Clicked="OnSettingsClicked" />
-
+            <MenuFlyoutItem Text="Einstellungen" Clicked="OnSettingsClicked" />
         </MenuBarItem>
 
         <MenuBarItem Text="Kunden">
-            <MenuFlyoutItem Text="Kunde hinzufügen"
-                            Clicked="OnAddCustomerClicked" />
+            <MenuFlyoutItem Text="Kunde hinzufügen" Clicked="OnAddCustomerClicked" />
+            <MenuFlyoutItem Text="Kunden anzeigen" Clicked="OnShowCustomersClicked" />
+            <MenuFlyoutItem Text="Kunde bearbeiten" Clicked="NotImplementedWarning" />
+        </MenuBarItem>
 
-            <MenuFlyoutItem Text="Kunden anzeigen"
-                            Clicked="OnShowCustomersClicked" />
-
-            <MenuFlyoutItem Text="Kunde bearbeiten"
-                            Clicked="NotImplementedWarning" />
-
+        <MenuBarItem Text="Mitarbeiter">
+            <MenuFlyoutItem Text="Mitarbeiter hinzufügen" Clicked="OnAddEmployeeClicked" />
         </MenuBarItem>
     </ContentPage.MenuBarItems>
 
     <ScrollView>
-        <VerticalStackLayout Spacing="25"
-                             Padding="30"
-                             HorizontalOptions="Start">
 
-            <Label Text="{Binding Error.Message}"
-                   TextColor="DarkRed"
-                   IsVisible="{Binding Error.HasMessage}" />
+        <!-- Main Layout -->
+        <Grid ColumnDefinitions="1080, Auto">
 
-            <Label Text="{Binding Status.Message}"
-                   TextColor="DarkGreen"
-                   IsVisible="{Binding Status.HasMessage}" />
+            <!-- Project Overview Layout-->
+            <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20,0">
+                <Label Grid.Row="0" Text="{Binding Error.Message}" TextColor="DarkRed"
+                        IsVisible="{Binding Error.HasMessage}" />
+                <Label Grid.Row="1" Text="{Binding Status.Message}" TextColor="DarkGreen"
+                        IsVisible="{Binding Status.HasMessage}" />
+                <Label Grid.Row="2" Text="Projektübersicht" FontSize="Title" />
+                <CollectionView Grid.Row="3" ItemsSource="{Binding Projects}" SelectionMode="Single"
+                        SelectedItem="{Binding Project}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto,Auto" Padding="0" ColumnSpacing="10"
+                                    x:DataType="{x:Type models:Project}">
+                                <Label Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold" />
+                                <Label Grid.Column="1" Text="{Binding Categorie}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
 
-            <CollectionView ItemsSource="{Binding Projects}"
-                            Header="Projekte"
-                            SelectionMode="Single"
-                            SelectedItem="{Binding Project}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="10"
-                              x:DataType="{x:Type models:Project}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0"
-                                   Text="{Binding Name}"
-                                   FontAttributes="Bold" />
-                            <Label Grid.Column="1"
-                                   Text="{Binding Categorie}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <!-- Project Details Layout -->
+            <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
+                    IsVisible="{Binding HasProject}">
+                <Label Grid.Row="0" Text="{Binding Path=Project.Name, StringFormat='Detailinformationen: {0}'}"
+                        FontSize="Micro" />
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
+                        ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Dateiname:" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Project.ProjectFileName}" />
+                    <Label Grid.Row="1" Grid.Column="0" Text="Typ:" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Project.Type}" />
+                    <Label Grid.Row="2" Grid.Column="0" Text="Kategorie:" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Project.Categorie}" />
+                    <Label Grid.Row="3" Grid.Column="0" Text="Startdatum:" />
+                    <DatePicker Grid.Row="3" Grid.Column="1"
+                            Date="{Binding Project.StartDate, Converter={StaticResource dateOnlyToDateTime}}" />
+                    <Label Grid.Row="4" Grid.Column="0" Text="Deadline:" />
+                    <DatePicker Grid.Row="4" Grid.Column="1"
+                            Date="{Binding Project.Deadline, Converter={StaticResource dateOnlyToDateTime}}" />
+                    <Label Grid.Row="5" Grid.Column="0" Text="Workload in Std.:" />
+                    <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Project.TotalWorkload}" />
+                </Grid>
+                <Label Grid.Row="2" Grid.Column="0" Text="Sonstige Informationen:" />
+                <Editor Grid.Row="3" Grid.Column="0" Text="{Binding Project.OtherInformation}" AutoSize="TextChanges" />
+                <Button Grid.Row="4" Text="Änderungen speichern" Command="{Binding SaveChangesCommand}" />
+            </Grid>
+        </Grid>
 
-            <VerticalStackLayout IsVisible="{Binding HasProject}">
-                <Label Text="{Binding Path=Project.Name, StringFormat='Detailinformationen: {0}'}"
-                       FontSize="Micro" />
-                <TableView Intent="Data">
-                    <TableRoot>
-                        <TableSection>
-                            <TextCell Text="Typ"
-                                      Detail="{Binding Project.Type}" />
-                            <TextCell Text="Kategorie"
-                                      Detail="{Binding Project.Categorie}" />
-                            <TextCell Text="Startdatum"
-                                      Detail="{Binding Project.StartDate}" />
-                            <TextCell Text="Deadline"
-                                      Detail="{Binding Project.Deadline}" />
-                        </TableSection>
-                    </TableRoot>
-                </TableView>
-            </VerticalStackLayout>
-        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

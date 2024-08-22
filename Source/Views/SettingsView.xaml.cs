@@ -25,7 +25,7 @@ public partial class SettingsView : ContentPage
             {
                 sb.Append(folders[i]);
             }
-            Configuration.Instance.CategoriePathsAndNames.Add((sb.ToString(), folders[^1]));
+            Configuration.Instance.CategorieNamesAndPaths.Add(folders[^1], sb.ToString());
         }
         else
         {
