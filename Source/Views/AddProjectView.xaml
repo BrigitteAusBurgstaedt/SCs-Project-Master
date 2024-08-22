@@ -39,13 +39,13 @@
                         SelectedItem="{Binding SelectedCustomer}" ItemDisplayBinding="{Binding Name}" />
                 <Label Grid.Row="7" Grid.Column="0" Text="Ansprechpartner*:" />
                 <Picker Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Employees}"
-                        SelectedItem="{Binding SelectedEmployee}">
-                    <Picker.ItemDisplayBinding>
+                        SelectedItem="{Binding SelectedEmployee}" ItemDisplayBinding="{Binding FirstName}">
+                    <!-- <Picker.ItemDisplayBinding> admin hat kein Nachname und macht somit Probleme TargetNullValue geht auch nicht
                         <MultiBinding StringFormat="{}{0} {1}">
                             <Binding Path="FirstName" />
                             <Binding Path="LastName" />
                         </MultiBinding>
-                    </Picker.ItemDisplayBinding>
+                    </Picker.ItemDisplayBinding> -->
                 </Picker>
             </Grid>
             <Label Grid.Row="3" Grid.Column="0" Text="Projektteam:" />
