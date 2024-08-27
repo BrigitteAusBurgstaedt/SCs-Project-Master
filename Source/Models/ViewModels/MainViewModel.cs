@@ -103,7 +103,7 @@ internal partial class MainViewModel : ObservableObject
             db.Remove(dict);
             db.ChangeTracker.DetectChanges();
             Debug.WriteLine(db.ChangeTracker.DebugView.LongView);
-            // db.SaveChanges();
+            db.SaveChanges();
             Status.Message = "Projekt gelöscht";
         }
         catch (Exception)
