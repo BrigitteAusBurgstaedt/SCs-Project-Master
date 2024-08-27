@@ -101,33 +101,13 @@
             <!-- User -->
             <Label Text="User" FontSize="18" FontAttributes="Bold" />
             <Label Text="{Binding Configuration.User.Login}" />
+
+            <Entry Placeholder="Config XML Text" Text="{Binding ConfigurationJson}" />
+
+            <Button Text="Einstellungen laden" Command="{Binding LoadConfigurationJsonCommand}" />
+
+            <Button Text="Als XML speichern" Clicked="OnSaveAsJsonClicked" />
+
         </StackLayout>
     </ScrollView>
-
-    <!-- 
-    <VerticalStackLayout>
-        <Label
-            Text="{Binding Configuration.ArchivePath}"/> 
- 
-        <ListView ItemsSource="{Binding Configuration.Types}"/> 
- 
-        <Button  
-            Text="Änderungen speicher" 
-            Command="{Binding SaveChangesCommand}"/> 
- 
-        <Entry 
-            Placeholder="Config JSON-String" 
-            Text="{Binding ConfigurationJson}"/> 
- 
-        <Button  
-            Text="Einstellungen laden" 
-            Command="{Binding LoadConfigurationJsonCommand}"/> 
-         
-        <Button 
-            Text="Als JSON speichern" 
-            Clicked="OnSaveAsJsonClicked"/> 
-  
-  
-    </VerticalStackLayout>  
-    -->
 </ContentPage>
