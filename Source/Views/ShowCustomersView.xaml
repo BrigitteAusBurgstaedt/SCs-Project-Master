@@ -6,26 +6,34 @@
              x:Class="SCsProjectMaster.Source.Views.ShowCustomersView"
              x:DataType="vm:ShowCustomersViewModel"
              Title="ShowCustomersPage">
-    <VerticalStackLayout>
+
+    <VerticalStackLayout Padding="10">
+        <Label Text="{Binding Error.Message}" TextColor="DarkRed" IsVisible="{Binding Error.HasMessage}" />
+        <Label Text="{Binding Status.Message}" TextColor="DarkGreen" IsVisible="{Binding Status.HasMessage}" />
         <CollectionView ItemsSource="{Binding Customers}" 
                             Header="Kunden" 
                             SelectionMode="Single"
-                            SelectedItem="" >
+                            SelectedItem="{Binding SelectedCustomer}" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="10" x:DataType="{x:Type models:Customer}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold" />
-                        <Label Grid.Column="1" Text="{Binding WebsiteUri}" />
+                    <Grid Padding="10" x:DataType="{x:Type models:Customer}" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="10">
+                        <Entry Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold" />
+                        <Entry Grid.Column="1" Text="{Binding Priority}" />
+                        <Entry Grid.Column="2" Text="{Binding WebsiteUri}" />
+                        <Entry Grid.Column="3" Text="{Binding PhoneNumber}" />
+                        <Entry Grid.Column="4" Text="{Binding EMailAddress}" />
+                        <Entry Grid.Column="5" Text="{Binding Address.AddressLine1}" />
+                        <Entry Grid.Column="6" Text="{Binding Address.AddressLine2}" />
+                        <Entry Grid.Column="7" Text="{Binding Address.AddressLine3}" />
+                        <Entry Grid.Column="8" Text="{Binding Address.Street}" />
+                        <Entry Grid.Column="9" Text="{Binding Address.HouseNumber}" />
+                        <Entry Grid.Column="10" Text="{Binding Address.City}" />
+                        <Entry Grid.Column="11" Text="{Binding Address.Country}" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button
-            Text="Änderungen speichern"
-            Command="{Binding SaveChangesCommand}"/>
+        <Button Text="Änderungen speichern" Command="{Binding SaveChangesCommand}"/>
+        <Button Text="Ausgewählten Kunden löschen" BackgroundColor="PaleVioletRed" Command="{Binding DeleteCustomerCommand}" />
     </VerticalStackLayout>
 </ContentPage>

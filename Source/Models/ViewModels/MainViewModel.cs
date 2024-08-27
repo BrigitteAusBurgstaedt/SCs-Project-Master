@@ -99,7 +99,6 @@ internal partial class MainViewModel : ObservableObject
             };
             db.Attach(p);
             db.Attach(em);
-            db.Projects.Includ
             // db.Attach(dict);
             db.Remove(dict);
             db.ChangeTracker.DetectChanges();
