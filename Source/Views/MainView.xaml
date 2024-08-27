@@ -24,8 +24,7 @@
 
         <MenuBarItem Text="Kunden">
             <MenuFlyoutItem Text="Kunde hinzufügen" Clicked="OnAddCustomerClicked" />
-            <MenuFlyoutItem Text="Kunden anzeigen" Clicked="OnShowCustomersClicked" />
-            <MenuFlyoutItem Text="Kunde bearbeiten" Clicked="NotImplementedWarning" />
+            <MenuFlyoutItem Text="Kunden bearbeiten" Clicked="OnShowCustomersClicked" />
         </MenuBarItem>
 
         <MenuBarItem Text="Mitarbeiter">
@@ -39,50 +38,81 @@
         <Grid ColumnDefinitions="1080, Auto">
 
             <!-- Project Overview Layout-->
-            <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20,0">
-                <Label Grid.Row="0" Text="{Binding Error.Message}" TextColor="DarkRed"
+            <VerticalStackLayout Grid.Column="0" Padding="20">
+                <Label Text="{Binding Error.Message}" TextColor="DarkRed"
                         IsVisible="{Binding Error.HasMessage}" />
-                <Label Grid.Row="1" Text="{Binding Status.Message}" TextColor="DarkGreen"
+                <Label Text="{Binding Status.Message}" TextColor="DarkGreen"
                         IsVisible="{Binding Status.HasMessage}" />
-                <Label Grid.Row="2" Text="Projektübersicht" FontSize="Title" />
-                <CollectionView Grid.Row="3" ItemsSource="{Binding Projects}" SelectionMode="Single"
-                        SelectedItem="{Binding Project}">
+                <Label Text="Projektübersicht" FontSize="Title" />
+                <Grid Padding="10" ColumnSpacing="10" ColumnDefinitions="*,*,*,*,*,*">
+                    <Label Text="Name" Grid.Column="0" FontAttributes="Bold" />
+                    <Label Text="Typ" Grid.Column="1" FontAttributes="Bold" />
+                    <Label Text="Kategorie" Grid.Column="2" FontAttributes="Bold" />
+                    <Label Text="Startdatum" Grid.Column="3" FontAttributes="Bold" />
+                    <Label Text="Frist" Grid.Column="4" FontAttributes="Bold" />
+                    <Label Text="Gesamtaufwand" Grid.Column="5" FontAttributes="Bold" />
+                </Grid>
+
+                <!-- CollectionView zur Anzeige der Projektliste -->
+                <CollectionView ItemsSource="{Binding Projects}" SelectionMode="Single"
+                        SelectedItem="{Binding SelectedProject}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid ColumnDefinitions="Auto,Auto" Padding="0" ColumnSpacing="10"
-                                    x:DataType="{x:Type models:Project}">
-                                <Label Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold" />
-                                <Label Grid.Column="1" Text="{Binding Categorie}" />
+                            <Grid Padding="10" ColumnSpacing="10" x:DataType="{x:Type models:Project}"
+                                    ColumnDefinitions="*,*,*,*,*,*">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <!-- Labels für die Felder des Projekts -->
+                                <Label Grid.Column="0" Text="{Binding Name}" />
+                                <Label Grid.Column="1" Text="{Binding Type}" />
+                                <Label Grid.Column="2" Text="{Binding Categorie}" />
+                                <Label Grid.Column="3" Text="{Binding StartDate, StringFormat='{0:dd.MM.yyyy}'}" />
+                                <Label Grid.Column="4" Text="{Binding Deadline, StringFormat='{0:dd.MM.yyyy}'}" />
+                                <Label Grid.Column="5" Text="{Binding TotalWorkload}" />
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </Grid>
+            </VerticalStackLayout>
 
             <!-- Project Details Layout -->
             <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
                     IsVisible="{Binding HasProject}">
-                <Label Grid.Row="0" Text="{Binding Path=Project.Name, StringFormat='Detailinformationen: {0}'}"
+                <Label Grid.Row="0" Text="{Binding Path=SelectedProject.Name, StringFormat='Detailinformationen: {0}'}"
                         FontSize="Micro" />
                 <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
                         ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
                     <Label Grid.Row="0" Grid.Column="0" Text="Dateiname:" />
-                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Project.ProjectFileName}" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding SelectedProject.ProjectFileName}" />
                     <Label Grid.Row="1" Grid.Column="0" Text="Typ:" />
-                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Project.Type}" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding SelectedProject.Type}" />
                     <Label Grid.Row="2" Grid.Column="0" Text="Kategorie:" />
-                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Project.Categorie}" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding SelectedProject.Categorie}" />
                     <Label Grid.Row="3" Grid.Column="0" Text="Startdatum:" />
                     <DatePicker Grid.Row="3" Grid.Column="1"
-                            Date="{Binding Project.StartDate, Converter={StaticResource dateOnlyToDateTime}}" />
+                            Date="{Binding SelectedProject.StartDate, Converter={StaticResource dateOnlyToDateTime}}" />
                     <Label Grid.Row="4" Grid.Column="0" Text="Deadline:" />
                     <DatePicker Grid.Row="4" Grid.Column="1"
-                            Date="{Binding Project.Deadline, Converter={StaticResource dateOnlyToDateTime}}" />
+                            Date="{Binding SelectedProject.Deadline, Converter={StaticResource dateOnlyToDateTime}}" />
                     <Label Grid.Row="5" Grid.Column="0" Text="Workload in Std.:" />
-                    <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Project.TotalWorkload}" />
+                    <Entry Grid.Row="5" Grid.Column="1" Text="{Binding SelectedProject.TotalWorkload}" />
                 </Grid>
                 <Label Grid.Row="2" Grid.Column="0" Text="Sonstige Informationen:" />
-                <Editor Grid.Row="3" Grid.Column="0" Text="{Binding Project.OtherInformation}" AutoSize="TextChanges" />
+                <Editor Grid.Row="3" Grid.Column="0" Text="{Binding SelectedProject.OtherInformation}" AutoSize="TextChanges" />
                 <Button Grid.Row="4" Text="Änderungen speichern" Command="{Binding SaveChangesCommand}" />
                 <Button Grid.Row="5" Text="Projekt löschen" BackgroundColor="PaleVioletRed" Command="{Binding DeleteProjectCommand}" />
             </Grid>

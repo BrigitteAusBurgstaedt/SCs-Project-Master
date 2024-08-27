@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
-             xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
-             x:Class="SCsProjectMaster.Source.Views.ShowCustomersView"
-             x:DataType="vm:ShowCustomersViewModel"
-             Title="ShowCustomersPage">
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
+        xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
+        x:Class="SCsProjectMaster.Source.Views.ShowCustomersView" x:DataType="vm:ShowCustomersViewModel"
+        Title="Kunden bearbeiten">
 
     <VerticalStackLayout Padding="10">
         <Label Text="{Binding Error.Message}" TextColor="DarkRed" IsVisible="{Binding Error.HasMessage}" />
         <Label Text="{Binding Status.Message}" TextColor="DarkGreen" IsVisible="{Binding Status.HasMessage}" />
-        <CollectionView ItemsSource="{Binding Customers}" 
-                            Header="Kunden" 
-                            SelectionMode="Single"
-                            SelectedItem="{Binding SelectedCustomer}" >
+
+        <!-- CollectionView Header Ersatz da dieser nicht angezeigt wird -->
+        <Grid Padding="10" ColumnSpacing="10" ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*,*">
+            <Label Text="Name" Grid.Column="0" FontAttributes="Bold" />
+            <Label Text="Priorität" Grid.Column="1" FontAttributes="Bold" />
+            <Label Text="Website" Grid.Column="2" FontAttributes="Bold" />
+            <Label Text="Telefon" Grid.Column="3" FontAttributes="Bold" />
+            <Label Text="E-Mail" Grid.Column="4" FontAttributes="Bold" />
+            <Label Text="Adresszeile 1" Grid.Column="5" FontAttributes="Bold" />
+            <Label Text="Adresszeile 2" Grid.Column="6" FontAttributes="Bold" />
+            <Label Text="Adresszeile 3" Grid.Column="7" FontAttributes="Bold" />
+            <Label Text="Straße" Grid.Column="8" FontAttributes="Bold" />
+            <Label Text="Hausnummer" Grid.Column="9" FontAttributes="Bold" />
+            <Label Text="Stadt" Grid.Column="10" FontAttributes="Bold" />
+            <Label Text="Land" Grid.Column="11" FontAttributes="Bold" />
+        </Grid>
+        <CollectionView ItemsSource="{Binding Customers}" SelectionMode="Single"
+                SelectedItem="{Binding SelectedCustomer}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="10" x:DataType="{x:Type models:Customer}" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="10">
-                        <Entry Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold" />
+                    <Grid Padding="10" x:DataType="{x:Type models:Customer}" ColumnDefinitions="*,40,*,*,*,*,*,*,*,*,*,*"
+                            ColumnSpacing="10">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Entry Grid.Column="0" Text="{Binding Name}" />
                         <Entry Grid.Column="1" Text="{Binding Priority}" />
                         <Entry Grid.Column="2" Text="{Binding WebsiteUri}" />
                         <Entry Grid.Column="3" Text="{Binding PhoneNumber}" />
@@ -33,7 +61,8 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Änderungen speichern" Command="{Binding SaveChangesCommand}"/>
-        <Button Text="Ausgewählten Kunden löschen" BackgroundColor="PaleVioletRed" Command="{Binding DeleteCustomerCommand}" />
+        <Button Text="Änderungen speichern" Command="{Binding SaveChangesCommand}" />
+        <Button Text="Ausgewählten Kunden löschen" BackgroundColor="PaleVioletRed"
+                Command="{Binding DeleteCustomerCommand}" />
     </VerticalStackLayout>
 </ContentPage>

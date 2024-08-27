@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace SCsProjectMaster.Source.Models.ViewModels;
 
@@ -15,12 +16,12 @@ internal partial class MainViewModel : ObservableObject
     private ObservableCollection<Project> _projects;
 
     [ObservableProperty]
-    private Project _project = new();
+    private Project _selectedProject = new();
 
     [ObservableProperty]
     private bool _hasProject = false;
 
-    public MainViewModel() 
+    public MainViewModel()
     {
         Status = new MessageViewModel();
         Error = new MessageViewModel();
@@ -55,14 +56,14 @@ internal partial class MainViewModel : ObservableObject
         using DatabaseContext db = new();
         try
         {
-            db.Update(Project);
+            db.Update(SelectedProject);
             db.SaveChanges();
             Status.Message = "Änderung gespeichert";
         }
         catch (Exception)
         {
             Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
-        }   
+        }
         LoadProjects();
     }
 
@@ -75,34 +76,25 @@ internal partial class MainViewModel : ObservableObject
         using DatabaseContext db = new();
         try
         {
-            // Fremdschlüsselbeziegung auflösen
-            Project p = Project;
-            if (p.EmployeeLogins.Count != 0) 
+            Project project = db.Projects.Include(p => p.EmployeeLogins).First(p => p.Id == SelectedProject.Id);
+            List<Employee> teamMembers = new();
+            foreach (Employee teamMember in project.EmployeeLogins)
             {
-                Employee e = p.EmployeeLogins.First();
-                db.Attach(p);
-                db.Attach(e);
-
-                p.EmployeeLogins.Remove(e);
-                e.ProjectsNavigation.Remove(p);
+                teamMembers.Add(db.Employees.Include(e => e.ProjectsNavigation).First(e => e.Login == teamMember.Login));
             }
-            Employee em = db.Employees.First(e => e.Login == "jpfeifer");
-            /*
-            em.ProjectsNavigation.Clear();
-            db.Employees.Update(em);
-            db.Remove(p);
-            */
-            Dictionary<string, object> dict = new()
+            project.EmployeeLogins.Clear();
+            for (int i = 0; i < teamMembers.Count; i++)
             {
-                { "ProjectId", p.Id },
-                { "EmployeeLogin", em.Login }
-            };
-            db.Attach(p);
-            db.Attach(em);
-            // db.Attach(dict);
-            db.Remove(dict);
-            db.ChangeTracker.DetectChanges();
-            Debug.WriteLine(db.ChangeTracker.DebugView.LongView);
+                teamMembers[i].ProjectsNavigation.Remove(teamMembers[i].ProjectsNavigation.First(p => p.Id == project.Id));
+            }
+
+            db.Update(project);
+            db.UpdateRange(teamMembers);
+
+            db.Remove(project);
+
+            // db.ChangeTracker.DetectChanges();
+            // Debug.WriteLine(db.ChangeTracker.DebugView.LongView);
             db.SaveChanges();
             Status.Message = "Projekt gelöscht";
         }
@@ -114,7 +106,7 @@ internal partial class MainViewModel : ObservableObject
         LoadProjects();
     }
 
-    partial void OnProjectChanged(Project value)
+    partial void OnSelectedProjectChanged(Project value)
     {
         HasProject = (value.Name != "");
     }
