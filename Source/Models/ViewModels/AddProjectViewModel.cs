@@ -32,7 +32,7 @@ internal partial class AddProjectViewModel : ObservableObject
     private Configuration _configuration = Configuration.Instance;
 
     [ObservableProperty]
-    private IList<string> _keys = Configuration.Instance.CategorieNamesAndPaths.Keys.ToList();
+    private IList<string> _keys = Configuration.Instance.Categories().ToList();
 
     public AddProjectViewModel()
     {

@@ -39,17 +39,38 @@ internal class Configuration
         }
     };
     public ICollection<List<InvoiceItem>> InvoiceItemsPresets { get; set; } = new List<List<InvoiceItem>>();
-    public Dictionary<string, string> CategorieNamesAndPaths { get; set; } = new Dictionary<string, string>();
+    public ICollection<CategoryAndPath> CategoriesAndPaths { get; set; } = new List<CategoryAndPath>()
+    {
+        new()
+        {
+            Category = "Aktiv"
+        },
+        new()
+        {
+            Category = "Pausiert"
+        },
+        new()
+        {
+            Category = "Archiv"
+        },
+
+    };
+
     public string ArchivePath { get; set; }
     public ICollection<string> Types { get; set; } = new List<string>() { "Video", "Fotografie", "Livestreaming", "Web Entwicklung", "Journalismus" };
     public string FileName { get; set; } = "config.json";
     public Employee User { get; set; }
 
-    private Configuration()
+    private Configuration() { }
+
+    public ICollection<string> Categories()
     {
-        CategorieNamesAndPaths.Add("Aktiv", "");
-        CategorieNamesAndPaths.Add("Pausiert", "");
-        CategorieNamesAndPaths.Add("Archiv", "");
+        ICollection<string> categories = new List<string>();
+        foreach (CategoryAndPath cap in CategoriesAndPaths)
+        {
+            categories.Add(cap.Category);
+        }
+        return categories;
     }
 
 }
