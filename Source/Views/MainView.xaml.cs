@@ -8,6 +8,7 @@ public partial class MainView : ContentPage
     {
         InitializeComponent();
         BindingContext = new MainViewModel();
+        Appearing += ((MainViewModel)BindingContext).MainView_Appearing;
     }
 
     private async void OnSettingsClicked(object sender, EventArgs e)

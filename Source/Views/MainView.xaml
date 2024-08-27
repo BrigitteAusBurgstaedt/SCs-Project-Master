@@ -60,7 +60,7 @@
             </Grid>
 
             <!-- Project Details Layout -->
-            <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
+            <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
                     IsVisible="{Binding HasProject}">
                 <Label Grid.Row="0" Text="{Binding Path=Project.Name, StringFormat='Detailinformationen: {0}'}"
                         FontSize="Micro" />
@@ -84,6 +84,7 @@
                 <Label Grid.Row="2" Grid.Column="0" Text="Sonstige Informationen:" />
                 <Editor Grid.Row="3" Grid.Column="0" Text="{Binding Project.OtherInformation}" AutoSize="TextChanges" />
                 <Button Grid.Row="4" Text="Änderungen speichern" Command="{Binding SaveChangesCommand}" />
+                <Button Grid.Row="5" Text="Projekt löschen" BackgroundColor="PaleVioletRed" Command="{Binding DeleteProjectCommand}" />
             </Grid>
         </Grid>
 

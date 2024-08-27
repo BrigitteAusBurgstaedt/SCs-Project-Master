@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace SCsProjectMaster.Source.Models.ViewModels;
@@ -68,16 +69,23 @@ internal partial class AddProjectViewModel : ObservableObject
             return;
         }
 
-        using DatabaseContext db = new();
+        using DatabaseContext db = new(new DbContextOptionsBuilder<DatabaseContext>().EnableSensitiveDataLogging(true).Options);
         try
         {
             Project.CustomerId = SelectedCustomer.Id;
             Project.ContactPerson = SelectedEmployee.Login;
-            Project.EmployeeLogins.Add(SelectedEmployee);
-            foreach (Employee teamMember in SelectedEmployees)
+            db.Employees.Attach(SelectedEmployee);
+            Project.EmployeeLogins.Add(SelectedEmployee); // Ansprechpartner muss im Projektteam sein
+            if (SelectedEmployees != null)
             {
-                if (!teamMember.Equals(SelectedEmployee))
-                    Project.EmployeeLogins.Add(teamMember);
+                foreach (Employee teamMember in SelectedEmployees)
+                {
+                    if (!teamMember.Equals(SelectedEmployee))
+                    {
+                        db.Employees.Attach(teamMember);
+                        Project.EmployeeLogins.Add(teamMember);
+                    }
+                }
             }
             db.Projects.Add(Project);
             db.SaveChanges();
