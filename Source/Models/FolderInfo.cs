@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SCsProjectMaster.Source.Models;
 
-internal class FolderInfo
+public class FolderInfo
 {
     public string FolderName { get; set; }
-    public ICollection<FolderInfo> Children { get; set; } = new List<FolderInfo>();
+    public ICollection<FolderInfo> SubFolders { get; set; } = new List<FolderInfo>();
 }

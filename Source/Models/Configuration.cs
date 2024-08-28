@@ -1,67 +1,133 @@
 ﻿
+using System.Xml.Serialization;
+
 namespace SCsProjectMaster.Source.Models;
 
 internal class Configuration
 {
-    public static Configuration Instance { get; set; } = new Configuration();
+    public ICollection<FolderPreset> FolderPresets { get; set; }
+    public ICollection<List<InvoiceItem>> InvoiceItemsPresets { get; set; }
+    public ICollection<CategoryAndPath> CategoriesAndPaths { get; set; }
+    public ICollection<string> Types { get; set; }
+    public Employee User { get; set; }
 
-    public ICollection<FolderPreset> FolderPresets { get; set; } = new List<FolderPreset>()
+    private Configuration()
     {
-        new FolderPreset()
+        //
+        // Standard Config
+        //
+
+        // FolderPresets
+        FolderPresets = new List<FolderPreset>()
         {
-            Name = "Preset 1",
-            Root = new FolderInfo()
+            new FolderPreset()
             {
-                FolderName = "root",
-                Children = new List<FolderInfo>() {
-                    new FolderInfo() {
-                        FolderName = "photo",
-                        Children = new List<FolderInfo>() {
-                            new FolderInfo() {
+                Name = "Preset 1",
+                Root = new FolderInfo()
+                {
+                    FolderName = "project",
+                    SubFolders = new List<FolderInfo>()
+                    {
+                        new FolderInfo()
+                        {
+                            FolderName = "photo",
+                            SubFolders = new List<FolderInfo>()
+                            {
+                                new FolderInfo()
+                                {
                                 FolderName = "cam a"
-                            },
-                            new FolderInfo() {
+                                },
+                                new FolderInfo()
+                                {
                                 FolderName = "cam b"
-                            },
-                            new FolderInfo() {
+                                },
+                                new FolderInfo()
+                                {
                                 FolderName = "cam c"
+                                }
                             }
+                        },
+                        new FolderInfo()
+                        {
+                            FolderName = "video"
+                        },
+                        new FolderInfo()
+                        {
+                            FolderName = "result"
                         }
-                    },
-                    new FolderInfo() {
-                        FolderName = "video"
-                    },
-                    new FolderInfo() {
-                        FolderName = "result"
                     }
                 }
             }
-        }
-    };
-    public ICollection<List<InvoiceItem>> InvoiceItemsPresets { get; set; } = new List<List<InvoiceItem>>();
-    public ICollection<CategoryAndPath> CategoriesAndPaths { get; set; } = new List<CategoryAndPath>()
+        };
+
+        // InvoiceItemsPresets
+        InvoiceItemsPresets = new List<List<InvoiceItem>>();
+
+        // CategoriesAndPaths
+        // TODO Load Categories from DB
+        CategoriesAndPaths = new List<CategoryAndPath>()
+        {
+            new()
+            {
+                Category = "Aktiv",
+                Path = "C:\\Projekte\\Aktiv"
+            },
+            new()
+            {
+                Category = "Pausiert",
+                Path = "C:\\Projekte\\Pausiert"
+            },
+            new()
+            {
+                Category = "Archiv",
+                Path = "C:\\Projekte\\Archiv"
+            },
+        };
+
+        // Types
+        Types = new List<string>() { "Video", "Fotografie", "Livestreaming", "Web Entwicklung", "Journalismus" };
+
+    }
+
+    public static void LoadConfiguration(string path)
     {
-        new()
-        {
-            Category = "Aktiv"
-        },
-        new()
-        {
-            Category = "Pausiert"
-        },
-        new()
-        {
-            Category = "Archiv"
-        },
+        using TextReader reader = new StreamReader(path);
+        XmlSerializer xmlSerializer = new(typeof(Configuration));
+        Configuration config = (Configuration)xmlSerializer.Deserialize(reader);
+        SetConfiguration(config);
+    }
 
-    };
+    public static void SaveConfiguration(string path)
+    {
+        Configuration config = GetConfiguration();
+        using TextWriter writer = new StreamWriter(path);
+        XmlSerializer xmlSerializer = new(typeof(Configuration));
+        xmlSerializer.Serialize(writer, config);
+    }
 
-    public string ArchivePath { get; set; }
-    public ICollection<string> Types { get; set; } = new List<string>() { "Video", "Fotografie", "Livestreaming", "Web Entwicklung", "Journalismus" };
-    public string FileName { get; set; } = "config.json";
-    public Employee User { get; set; }
+    public static Configuration GetConfiguration()
+    {
+        Configuration config;
+        string configString = Preferences.Default.Get("Configuration", "Unknown");
+        if (configString == "Unknown")
+        {
+            config = new Configuration();
+            SetConfiguration(config);
+            return config;
+        }
+        using TextReader reader = new StringReader(configString);
+        XmlSerializer xmlSerializer = new(typeof(Configuration));
+        config = (Configuration)xmlSerializer.Deserialize(reader);
+        return config;
+    }
 
-    private Configuration() { }
+    public static void SetConfiguration(Configuration config)
+    {
+        using TextWriter writer = new StringWriter();
+        XmlSerializer xmlSerializer = new(typeof(Configuration));
+        xmlSerializer.Serialize(writer, config);
+        Preferences.Default.Set("Configuration", writer.ToString());
+    }
 
     public ICollection<string> Categories()
     {

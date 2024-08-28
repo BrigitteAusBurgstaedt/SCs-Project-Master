@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SCsProjectMaster.Source.Models;
 
@@ -58,4 +59,37 @@ public partial class Project
     public virtual ICollection<Stopwatch> Stopwatches { get; set; } = new List<Stopwatch>();
 
     public virtual ICollection<Employee> EmployeeLogins { get; set; } = new List<Employee>();
+
+    public void CreateFolderStructure(FolderInfo rootFolder)
+    {
+        if (rootFolder == null) throw new ArgumentNullException(nameof(rootFolder));
+        Configuration config = Configuration.GetConfiguration();
+        string basePath = null;
+
+        foreach (CategoryAndPath cap in config.CategoriesAndPaths)
+        {
+            if (cap.Category == Categorie)
+            {
+                basePath = cap.Path;
+                break;
+            }
+        }
+        if (string.IsNullOrEmpty(basePath)) throw new Exception("Category not found or without path");
+
+        string projectFolderPath = Path.Combine(basePath, Id + " " + Name);
+        if (Directory.Exists(projectFolderPath)) return;
+        Directory.CreateDirectory(projectFolderPath);
+
+        CreateSubFolders(rootFolder, projectFolderPath);
+    }
+
+    private static void CreateSubFolders(FolderInfo folder, string currentPath)
+    {
+        foreach (var subFolder in folder.SubFolders)
+        {
+            string subFolderPath = Path.Combine(currentPath, subFolder.FolderName);
+            Directory.CreateDirectory(subFolderPath);
+            CreateSubFolders(subFolder, subFolderPath);
+        }
+    }
 }

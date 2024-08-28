@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SCsProjectMaster.Source.Models;
 
-internal class FolderPreset
+public class FolderPreset
 {
     public string Name { get; set; }
     public FolderInfo Root { get; set; } = new();
