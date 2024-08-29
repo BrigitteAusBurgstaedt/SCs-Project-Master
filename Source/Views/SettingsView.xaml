@@ -7,21 +7,19 @@
         x:Class="SCsProjectMaster.Source.Views.SettingsView" x:DataType="vm:SettingsViewModel" Title="Einstellungen">
 
     <ScrollView>
-        <StackLayout Padding="10">
+        <StackLayout Padding="10" Spacing="10">
             <!-- Folder Presets -->
-            <Label Text="Folder Presets" FontSize="18" FontAttributes="Bold" />
+            <Label Text="Ordnerstrukturvorlagen" FontSize="18" FontAttributes="Bold" />
             <CollectionView ItemsSource="{Binding Configuration.FolderPresets}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <toolkit:Expander x:DataType="{x:Type models:FolderPreset}">
                             <toolkit:Expander.Header>
-                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding Name}" FontAttributes="Bold" />
                             </toolkit:Expander.Header>
-                            <StackLayout Padding="10">
-                                <Label Text="Root Folder:" FontAttributes="Bold" />
+                            <HorizontalStackLayout Padding="10">
                                 <Label Text="{Binding Root.FolderName}" />
-                                <Label Text="Children:" FontAttributes="Bold" />
-                                <CollectionView ItemsSource="{Binding Root.Children}">
+                                <CollectionView ItemsSource="{Binding Root.SubFolders}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
                                             <toolkit:Expander x:DataType="{x:Type models:FolderInfo}">
@@ -30,7 +28,7 @@
                                                 </toolkit:Expander.Header>
                                                 <StackLayout Padding="10">
                                                     <Label Text="Children:" FontAttributes="Bold" />
-                                                    <CollectionView ItemsSource="{Binding Children}">
+                                                    <CollectionView ItemsSource="{Binding SubFolders}">
                                                         <CollectionView.ItemTemplate>
                                                             <DataTemplate>
                                                                 <Label Text="{Binding FolderName}" />
@@ -42,37 +40,22 @@
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
-                            </StackLayout>
+                            </HorizontalStackLayout>
                         </toolkit:Expander>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-            <!-- Invoice Items Presets -->
-            <Label Text="Invoice Items Presets" FontSize="18" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Configuration.InvoiceItemsPresets}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Padding="10">
-                            <Label Text="Invoice Items:" FontAttributes="Bold" />
-                            <CollectionView ItemsSource="{Binding}">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Label x:DataType="{x:Type models:InvoiceItem}" Text="{Binding Name}" />
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
+            
             <!-- Categorie Names and Paths -->
-            <Label Text="Categorie Names and Paths" FontSize="18" FontAttributes="Bold" />
+            <Label Text="Pfadzuordnung" FontSize="18" FontAttributes="Bold" />
+            <Grid ColumnDefinitions="*,2*">
+                <Label Grid.Column="0" Text="Kategorie" FontAttributes="Bold" />
+                <Label Grid.Column="1" Text="Pfad" FontAttributes="Bold" />
+            </Grid>
             <CollectionView ItemsSource="{Binding Configuration.CategoriesAndPaths}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:DataType="{x:Type models:CategoryAndPath}" ColumnDefinitions="Auto,Auto">
+                        <Grid x:DataType="{x:Type models:CategoryAndPath}" ColumnDefinitions="*,2*">
                             <Label Grid.Column="0" Text="{Binding Category}" />
                             <Entry Grid.Column="1" Text="{Binding Path}" />
                         </Grid>
@@ -80,12 +63,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <!-- Archive Path -->
-            <Label Text="Archive Path" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding Configuration.ArchivePath}" />
-
             <!-- Types -->
-            <Label Text="Types" FontSize="18" FontAttributes="Bold" />
+            <Label Text="Typen" FontSize="18" FontAttributes="Bold" />
             <ListView ItemsSource="{Binding Configuration.Types}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -94,19 +73,9 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <!-- File Name -->
-            <Label Text="File Name" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding Configuration.FileName}" />
+            <Button Text="Konfiguration herunterladen" Command="{Binding DownloadConfigurationCommand}" />
 
-            <!-- User -->
-            <Label Text="User" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding Configuration.User.Login}" />
-
-            <Entry Placeholder="Config XML Text" Text="{Binding ConfigurationJson}" />
-
-            <Button Text="Einstellungen laden" Command="{Binding LoadConfigurationJsonCommand}" />
-
-            <Button Text="Als XML speichern" Clicked="OnSaveAsJsonClicked" />
+            <Button Text="Konfiguration hochladen" Command="{Binding LoadConfigurationCommand}" />
 
         </StackLayout>
     </ScrollView>

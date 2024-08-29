@@ -10,4 +10,9 @@ public class FolderPreset
 {
     public string Name { get; set; }
     public FolderInfo Root { get; set; } = new();
+
+    public override string ToString()
+    {
+        return Name; 
+    }
 }

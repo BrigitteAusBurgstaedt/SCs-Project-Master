@@ -29,10 +29,10 @@ internal partial class AddProjectViewModel : ObservableObject
     private IList<Employee> _selectedEmployees;
 
     [ObservableProperty]
-    private Configuration _configuration = Configuration.Instance;
+    private Configuration _configuration = Configuration.GetConfiguration();
 
     [ObservableProperty]
-    private IList<string> _keys = Configuration.Instance.Categories().ToList();
+    private IList<string> _keys = Configuration.GetConfiguration().Categories().ToList();
 
     public AddProjectViewModel()
     {
@@ -69,7 +69,7 @@ internal partial class AddProjectViewModel : ObservableObject
             return;
         }
 
-        using DatabaseContext db = new(new DbContextOptionsBuilder<DatabaseContext>().EnableSensitiveDataLogging(true).Options);
+        using DatabaseContext db = new();
         try
         {
             Project.CustomerId = SelectedCustomer.Id;

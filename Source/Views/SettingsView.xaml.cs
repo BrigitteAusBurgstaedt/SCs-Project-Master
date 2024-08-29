@@ -13,38 +13,4 @@ public partial class SettingsView : ContentPage
 		InitializeComponent();
         BindingContext = new SettingsViewModel();
 	}
-
-    private async void OnAddCategorieClicked(object sender, EventArgs e)
-    {
-        var result = await FolderPicker.Default.PickAsync(CancellationToken.None);
-        if (result.IsSuccessful)
-        {
-            string[] folders = result.Folder.Path.Split('/');
-            StringBuilder sb = new(folders[0]);
-            for (int i = 1; i < folders.Length - 1; i++)
-            {
-                sb.Append(folders[i]);
-            }
-            Configuration.Instance.CategoriesAndPaths.Add(new() { Category = folders[^1], Path = sb.ToString() });
-        }
-        else
-        {
-            await Toast.Make($"The folder was not picked with error: {result.Exception.Message}").Show(CancellationToken.None);
-        }
-
-    }
-
-    private async void OnSaveAsJsonClicked(object sender, EventArgs e)
-    {
-        var result = await FolderPicker.Default.PickAsync(CancellationToken.None);
-        if (result.IsSuccessful)
-        {
-            string filePath = result.Folder.Path + Configuration.Instance.FileName;
-            await File.WriteAllTextAsync(filePath, Preferences.Get("ConfigurationJson", "Unknown"));
-        }
-        else
-        {
-            await Toast.Make($"The folder was not picked with error: {result.Exception.Message}").Show(CancellationToken.None);
-        }
-    }
 }

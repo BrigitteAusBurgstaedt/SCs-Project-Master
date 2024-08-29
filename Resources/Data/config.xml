@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FolderPresets>
+    <FolderPreset>
+      <Name>Preset 1</Name>
+      <Root>
+        <FolderName>project</FolderName>
+        <SubFolders>
+          <FolderInfo>
+            <FolderName>photo</FolderName>
+            <SubFolders>
+              <FolderInfo>
+                <FolderName>cam a</FolderName>
+                <SubFolders />
+              </FolderInfo>
+              <FolderInfo>
+                <FolderName>cam b</FolderName>
+                <SubFolders />
+              </FolderInfo>
+              <FolderInfo>
+                <FolderName>cam c</FolderName>
+                <SubFolders />
+              </FolderInfo>
+            </SubFolders>
+          </FolderInfo>
+          <FolderInfo>
+            <FolderName>video</FolderName>
+            <SubFolders />
+          </FolderInfo>
+          <FolderInfo>
+            <FolderName>result</FolderName>
+            <SubFolders />
+          </FolderInfo>
+        </SubFolders>
+      </Root>
+    </FolderPreset>
+  </FolderPresets>
+  <CategoriesAndPaths>
+    <CategoryAndPath>
+      <Category>Aktiv</Category>
+      <Path>C:\Projekte\Aktiv</Path>
+    </CategoryAndPath>
+    <CategoryAndPath>
+      <Category>Pausiert</Category>
+      <Path>C:\Projekte\Pausiert</Path>
+    </CategoryAndPath>
+    <CategoryAndPath>
+      <Category>Archiv</Category>
+      <Path>C:\Projekte\Archiv</Path>
+    </CategoryAndPath>
+  </CategoriesAndPaths>
+  <Types>
+    <string>Video</string>
+    <string>Fotografie</string>
+    <string>Livestreaming</string>
+    <string>Web Entwicklung</string>
+    <string>Journalismus</string>
+  </Types>
+</Configuration>

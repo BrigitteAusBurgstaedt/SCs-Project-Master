@@ -9,5 +9,5 @@ namespace SCsProjectMaster.Source.Models;
 public class FolderInfo
 {
     public string FolderName { get; set; }
-    public ICollection<FolderInfo> SubFolders { get; set; } = new List<FolderInfo>();
+    public List<FolderInfo> SubFolders { get; set; } = new List<FolderInfo>();
 }

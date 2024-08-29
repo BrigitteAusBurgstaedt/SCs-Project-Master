@@ -35,7 +35,7 @@
     <ScrollView>
 
         <!-- Main Layout -->
-        <Grid ColumnDefinitions="1080, Auto">
+        <Grid ColumnDefinitions="1000, Auto">
 
             <!-- Project Overview Layout-->
             <VerticalStackLayout Grid.Column="0" Padding="20">
@@ -90,11 +90,11 @@
             </VerticalStackLayout>
 
             <!-- Project Details Layout -->
-            <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
+            <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
                     IsVisible="{Binding HasProject}">
                 <Label Grid.Row="0" Text="{Binding Path=SelectedProject.Name, StringFormat='Detailinformationen: {0}'}"
-                        FontSize="Micro" />
-                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
+                        FontSize="18" FontAttributes="Bold" />
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
                         ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
                     <Label Grid.Row="0" Grid.Column="0" Text="Dateiname:" />
                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding SelectedProject.ProjectFileName}" />
@@ -115,6 +115,33 @@
                 <Editor Grid.Row="3" Grid.Column="0" Text="{Binding SelectedProject.OtherInformation}" AutoSize="TextChanges" />
                 <Button Grid.Row="4" Text="Änderungen speichern" Command="{Binding SaveChangesCommand}" />
                 <Button Grid.Row="5" Text="Projekt löschen" BackgroundColor="PaleVioletRed" Command="{Binding DeleteProjectCommand}" />
+                <BoxView Grid.Row="6" Color="Grey" CornerRadius="5" HeightRequest="5" />
+                <Label Grid.Row="7" Text="Ordnerstruktur" FontSize="18" FontAttributes="Bold" />
+                <CollectionView Grid.Row="8" ItemsSource="{Binding Configuration.FolderPresets}" SelectionMode="Single"
+                        SelectedItem="{Binding SelectedFolderPreset}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Label Text="{Binding}" Padding="10" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Button Grid.Row="9" Text="Ordnerstruktur erzeugen" Command="{Binding CreateFolderStructureCommand}" />
             </Grid>
         </Grid>
 

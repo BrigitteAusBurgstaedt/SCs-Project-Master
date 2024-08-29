@@ -4,6 +4,8 @@ using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace SCsProjectMaster.Source.Models.ViewModels;
 
@@ -21,21 +23,28 @@ internal partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private bool _hasProject = false;
 
+    [ObservableProperty]
+    private FolderPreset _selectedFolderPreset = new();
+
+    [ObservableProperty]
+    private Configuration _configuration;
+
     public MainViewModel()
     {
         Status = new MessageViewModel();
         Error = new MessageViewModel();
 
-        LoadProjects();
+        LoadItems();
     }
 
     public void MainView_Appearing(object sender, EventArgs e)
     {
-        LoadProjects();
+        LoadItems();
     }
 
-    private void LoadProjects()
+    private void LoadItems()
     {
+        Configuration = Configuration.GetConfiguration();
         using DatabaseContext db = new();
         try
         {
@@ -64,7 +73,7 @@ internal partial class MainViewModel : ObservableObject
         {
             Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
         }
-        LoadProjects();
+        LoadItems();
     }
 
     [RelayCommand]
@@ -103,7 +112,20 @@ internal partial class MainViewModel : ObservableObject
             Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
             throw;
         }
-        LoadProjects();
+        LoadItems();
+    }
+
+    [RelayCommand]
+    private async Task CreateFolderStructure()
+    {
+        try
+        {
+            SelectedProject.CreateFolderStructure(SelectedFolderPreset.Root);
+            await Toast.Make("Ordnerstruktur erstellt", ToastDuration.Short).Show(CancellationToken.None);
+        } catch (Exception)
+        {
+            await Toast.Make("Fehler: Ordnerstruktur konnte nicht erstellt werden", ToastDuration.Short).Show(CancellationToken.None);
+        }
     }
 
     partial void OnSelectedProjectChanged(Project value)

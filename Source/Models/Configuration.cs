@@ -1,132 +1,46 @@
 ﻿
+using System.Diagnostics;
 using System.Xml.Serialization;
 
 namespace SCsProjectMaster.Source.Models;
 
-internal class Configuration
+public class Configuration
 {
-    public ICollection<FolderPreset> FolderPresets { get; set; }
-    public ICollection<List<InvoiceItem>> InvoiceItemsPresets { get; set; }
-    public ICollection<CategoryAndPath> CategoriesAndPaths { get; set; }
-    public ICollection<string> Types { get; set; }
-    public Employee User { get; set; }
+    public List<FolderPreset> FolderPresets { get; set; }
+    public List<CategoryAndPath> CategoriesAndPaths { get; set; }
+    public List<string> Types { get; set; }
 
-    private Configuration()
-    {
-        //
-        // Standard Config
-        //
-
-        // FolderPresets
-        FolderPresets = new List<FolderPreset>()
-        {
-            new FolderPreset()
-            {
-                Name = "Preset 1",
-                Root = new FolderInfo()
-                {
-                    FolderName = "project",
-                    SubFolders = new List<FolderInfo>()
-                    {
-                        new FolderInfo()
-                        {
-                            FolderName = "photo",
-                            SubFolders = new List<FolderInfo>()
-                            {
-                                new FolderInfo()
-                                {
-                                FolderName = "cam a"
-                                },
-                                new FolderInfo()
-                                {
-                                FolderName = "cam b"
-                                },
-                                new FolderInfo()
-                                {
-                                FolderName = "cam c"
-                                }
-                            }
-                        },
-                        new FolderInfo()
-                        {
-                            FolderName = "video"
-                        },
-                        new FolderInfo()
-                        {
-                            FolderName = "result"
-                        }
-                    }
-                }
-            }
-        };
-
-        // InvoiceItemsPresets
-        InvoiceItemsPresets = new List<List<InvoiceItem>>();
-
-        // CategoriesAndPaths
-        // TODO Load Categories from DB
-        CategoriesAndPaths = new List<CategoryAndPath>()
-        {
-            new()
-            {
-                Category = "Aktiv",
-                Path = "C:\\Projekte\\Aktiv"
-            },
-            new()
-            {
-                Category = "Pausiert",
-                Path = "C:\\Projekte\\Pausiert"
-            },
-            new()
-            {
-                Category = "Archiv",
-                Path = "C:\\Projekte\\Archiv"
-            },
-        };
-
-        // Types
-        Types = new List<string>() { "Video", "Fotografie", "Livestreaming", "Web Entwicklung", "Journalismus" };
-
-    }
+    private Configuration() { }
 
     public static void LoadConfiguration(string path)
     {
-        using TextReader reader = new StreamReader(path);
         XmlSerializer xmlSerializer = new(typeof(Configuration));
-        Configuration config = (Configuration)xmlSerializer.Deserialize(reader);
+        Configuration config = (Configuration)xmlSerializer.Deserialize(File.OpenText(path));
         SetConfiguration(config);
     }
 
     public static void SaveConfiguration(string path)
     {
+        string filePath = Path.Combine(path, "config.xml");
         Configuration config = GetConfiguration();
-        using TextWriter writer = new StreamWriter(path);
+        using TextWriter writer = new StreamWriter(filePath);
         XmlSerializer xmlSerializer = new(typeof(Configuration));
         xmlSerializer.Serialize(writer, config);
     }
 
     public static Configuration GetConfiguration()
     {
-        Configuration config;
-        string configString = Preferences.Default.Get("Configuration", "Unknown");
-        if (configString == "Unknown")
-        {
-            config = new Configuration();
-            SetConfiguration(config);
-            return config;
-        }
-        using TextReader reader = new StringReader(configString);
+        using TextReader reader = File.OpenText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Data", "config.xml"));
         XmlSerializer xmlSerializer = new(typeof(Configuration));
-        config = (Configuration)xmlSerializer.Deserialize(reader);
+        Configuration config = (Configuration)xmlSerializer.Deserialize(reader);
         return config;
     }
 
     public static void SetConfiguration(Configuration config)
     {
-        using TextWriter writer = new StringWriter();
+        using TextWriter writer = File.CreateText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Data", "config.xml"));
         XmlSerializer xmlSerializer = new(typeof(Configuration));
         xmlSerializer.Serialize(writer, config);
-        Preferences.Default.Set("Configuration", writer.ToString());
     }
 
     public ICollection<string> Categories()
