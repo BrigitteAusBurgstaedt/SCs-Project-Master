@@ -5,6 +5,10 @@
         xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
         xmlns:converter="clr-namespace:SCsProjectMaster.Source.Logic.Converter" x:DataType="vm:MainViewModel">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+    
     <ContentPage.Resources>
         <converter:DateOnlyToDateTimeConverter x:Key="dateOnlyToDateTime" />
     </ContentPage.Resources>

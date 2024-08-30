@@ -58,6 +58,5 @@ internal partial class SettingsViewModel : ObservableObject
         {
             await Toast.Make("Fehler: Datei konnte nicht gelesen werden. Bitte erneut versuchen.").Show();
         }
-        
     }
 }

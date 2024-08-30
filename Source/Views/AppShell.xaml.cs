@@ -8,11 +8,12 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        Routing.RegisterRoute(nameof(SettingsView), typeof(SettingsView));
-        Routing.RegisterRoute(nameof(AddCustomerView), typeof(AddCustomerView));
-        Routing.RegisterRoute(nameof(AddEmployeeView), typeof(AddEmployeeView));
-        Routing.RegisterRoute(nameof(AddProjectView), typeof(AddProjectView));
-        Routing.RegisterRoute(nameof(ShowCustomersView), typeof(ShowCustomersView));
-        Routing.RegisterRoute(nameof(ShowEmployeesView), typeof(ShowEmployeesView));
+        Routing.RegisterRoute(nameof(MainView), typeof(MainView));
+        Routing.RegisterRoute(nameof(MainView) + "/" + nameof(SettingsView), typeof(SettingsView));
+        Routing.RegisterRoute(nameof(MainView) + "/" + nameof(AddCustomerView), typeof(AddCustomerView));
+        Routing.RegisterRoute(nameof(MainView) + "/" + nameof(AddEmployeeView), typeof(AddEmployeeView));
+        Routing.RegisterRoute(nameof(MainView) + "/" + nameof(AddProjectView), typeof(AddProjectView));
+        Routing.RegisterRoute(nameof(MainView) + "/" + nameof(ShowCustomersView), typeof(ShowCustomersView));
+        Routing.RegisterRoute(nameof(MainView) + "/" + nameof(ShowEmployeesView), typeof(ShowEmployeesView));
     }
 }

@@ -13,31 +13,31 @@ public partial class MainView : ContentPage
 
     private async void OnSettingsClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(SettingsView));
+        await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(SettingsView));
     }
 
     private async void OnAddCustomerClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(AddCustomerView));
+        await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(AddCustomerView));
     }
     private async void OnAddEmployeeClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(AddEmployeeView));
+        await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(AddEmployeeView));
     }
 
     private async void OnShowCustomersClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ShowCustomersView));
+        await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(ShowCustomersView));
     }
 
     private async void OnShowEmployeesClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ShowEmployeesView));
+        await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(ShowEmployeesView));
     }
 
     private async void OnAddProjectClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(AddProjectView));
+        await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(AddProjectView));
     }
 
     private async void NotImplementedWarning(object sender, EventArgs e)

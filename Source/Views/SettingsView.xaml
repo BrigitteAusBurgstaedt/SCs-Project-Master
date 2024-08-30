@@ -56,8 +56,8 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid x:DataType="{x:Type models:CategoryAndPath}" ColumnDefinitions="*,2*">
-                            <Label Grid.Column="0" Text="{Binding Category}" />
-                            <Entry Grid.Column="1" Text="{Binding Path}" />
+                            <Label Grid.Column="0" VerticalOptions="Center" Text="{Binding Category}" />
+                            <Entry Grid.Column="1" VerticalOptions="Center" Text="{Binding Path}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

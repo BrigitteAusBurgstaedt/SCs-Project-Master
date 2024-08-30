@@ -9,6 +9,7 @@ public class Configuration
     public List<FolderPreset> FolderPresets { get; set; }
     public List<CategoryAndPath> CategoriesAndPaths { get; set; }
     public List<string> Types { get; set; }
+    public string Login { get; set; }
 
     private Configuration() { }
 

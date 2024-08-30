@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"  
+             xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
+             xmlns:converter="clr-namespace:SCsProjectMaster.Source.Logic.Converter"
+             x:Class="SCsProjectMaster.Source.Views.AddInvoiceView"  
+             x:DataType="vm:AddInvoiceViewModel"  
+             Title="Rechnung hinzufügen">
+
+    <ContentPage.Resources>
+        <converter:DateOnlyToDateTimeConverter x:Key="dateOnlyToDateTime" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"  
+                  ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="Rechnungsnummer" />
+                <Entry VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Invoice.Number}" />
+
+                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="Erstellungsdatum" />
+                <DatePicker VerticalOptions="Center" Grid.Row="1" Grid.Column="1" Date="{Binding Invoice.CreationDate, Converter={StaticResource dateOnlyToDateTime}}" />
+
+                <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="Projekt" />
+                <Picker VerticalOptions="Center" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Projects}" SelectedItem="{Binding Invoice.Project}" ItemDisplayBinding="{Binding Name}" />
+
+                <Label VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="Rechnungsposten" />
+                <CollectionView Grid.Row="3" Grid.Column="1" ItemsSource="{Binding InvoiceItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:InvoiceItem">
+                            <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="10">
+                                <Entry Grid.Column="0" Text="{Binding Position}" Placeholder="Position" Keyboard="Numeric"/>
+                                <Entry Grid.Column="1" Text="{Binding Name}" Placeholder="Name" />
+                                <Entry Grid.Column="2" Text="{Binding Units}" Placeholder="Einheiten" Keyboard="Numeric"/>
+                                <Entry Grid.Column="3" Text="{Binding UnitPrice}" Placeholder="Stückpreis" Keyboard="Numeric"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+            <Button Grid.Row="4" Text="Rechnung erstellen" Command="{Binding CreateInvoiceCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>  

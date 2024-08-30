@@ -10,9 +10,9 @@ namespace SCsProjectMaster.Source.Models.ViewModels;
 internal partial class ShowEmployeesViewModel : ObservableObject
 {
     [ObservableProperty]
-    private ObservableCollection<Customer> _employees;
+    private ObservableCollection<Employee> _employees;
     [ObservableProperty]
-    private Customer _selecteEmployee;
+    private Employee _selecteEmployee;
 
     public ShowEmployeesViewModel()
     {
