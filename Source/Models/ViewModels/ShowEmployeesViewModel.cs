@@ -4,18 +4,17 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace SCsProjectMaster.Source.Models.ViewModels;
 
-internal partial class ShowCustomersViewModel : ObservableObject
+internal partial class ShowEmployeesViewModel : ObservableObject
 {
     [ObservableProperty]
-    private ObservableCollection<Customer> _customers;
+    private ObservableCollection<Customer> _employees;
     [ObservableProperty]
-    private Customer _selectedCustomer;
+    private Customer _selecteEmployee;
 
-    public ShowCustomersViewModel()
+    public ShowEmployeesViewModel()
     {
         Load();
     }
@@ -25,7 +24,7 @@ internal partial class ShowCustomersViewModel : ObservableObject
         using DatabaseContext db = new();
         try
         {
-            Customers = db.Customers.Include(c => c.Address).ToObservableCollection();
+            Employees = db.Employees.Include(c => c.Address).ToObservableCollection();
         }
         catch (Exception)
         {
@@ -39,7 +38,7 @@ internal partial class ShowCustomersViewModel : ObservableObject
         using DatabaseContext db = new();
         try
         {
-            db.Customers.UpdateRange(Customers);
+            db.Employees.UpdateRange(Employees);
             db.SaveChanges();
             await Toast.Make("Info: Änderungen gespeichert.").Show();
         }
@@ -56,21 +55,21 @@ internal partial class ShowCustomersViewModel : ObservableObject
         using DatabaseContext db = new();
         try
         {
-            Customer customer = db.Customers.Include(c => c.Address).First(c => c.Id == SelectedCustomer.Id);
-            Address address = db.Addresses.Include(a => a.Customers).First(a => a.Id == customer.Address.Id);
+            Employee employee = db.Employees.Include(c => c.Address).First(c => c.Login == SelectedEmployee.Id);
+            Address address = db.Addresses.Include(a => a.Employees).First(a => a.Id == employee.Address.Id);
             // TODO handle Address
-            customer.Address = null;
-            db.Update(customer);
-            db.Remove(customer);
+            employee.Address = null;
+            db.Update(employee);
+            db.Remove(employee);
             // db.ChangeTracker.DetectChanges();
             // Debug.WriteLine(db.ChangeTracker.DebugView.LongView);
             db.SaveChanges();
-            await Toast.Make("Info: Kunde gelöscht").Show();
+            await Toast.Make("Info: Mitarbeiter gelöscht").Show();
         }
         catch (Exception)
         {
             await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
-            // TODO Fehler: Kunde an Projekt beteiligt
+            // TODO Fehler: Mitarbeiter an Projekt beteiligt
         }
         Load();
     }

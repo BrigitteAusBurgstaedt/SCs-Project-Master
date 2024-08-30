@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SCsProjectMaster.Source.Models;
+﻿namespace SCsProjectMaster.Source.Models;
 
 public partial class Employee
 {

@@ -76,6 +76,9 @@
 	  <Compile Update="Source\Views\SettingsView.xaml.cs">
 	    <DependentUpon>SettingsView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Source\Views\ShowEmployeesView.xaml.cs">
+	    <DependentUpon>ShowEmployeesView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Source\Views\ShowCustomersView.xaml.cs">
 	    <DependentUpon>ShowCustomersView.xaml</DependentUpon>
 	  </Compile>
@@ -92,6 +95,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Source\Views\SettingsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Views\ShowEmployeesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Source\Views\ShowCustomersView.xaml">

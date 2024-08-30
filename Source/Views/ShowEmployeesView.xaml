@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:models="clr-namespace:SCsProjectMaster.Source.Models"
+        xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels"
+        x:Class="SCsProjectMaster.Source.Views.ShowEmployeesView" x:DataType="vm:ShowEmployeesViewModel"
+        Title="Mitarbeiter bearbeiten">
+
+    <VerticalStackLayout Padding="10">
+        <!-- CollectionView Header Ersatz da dieser nicht angezeigt wird -->
+        <Grid Padding="10" ColumnSpacing="10" ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*">
+            <Label Text="Login" Grid.Column="0" FontAttributes="Bold" />
+            <Label Text="Vorname" Grid.Column="1" FontAttributes="Bold" />
+            <Label Text="Nachname" Grid.Column="2" FontAttributes="Bold" />
+            <Label Text="Telefon" Grid.Column="3" FontAttributes="Bold" />
+            <Label Text="Adresszeile 1" Grid.Column="4" FontAttributes="Bold" />
+            <Label Text="Adresszeile 2" Grid.Column="5" FontAttributes="Bold" />
+            <Label Text="Adresszeile 3" Grid.Column="6" FontAttributes="Bold" />
+            <Label Text="Straße" Grid.Column="7" FontAttributes="Bold" />
+            <Label Text="Hausnummer" Grid.Column="8" FontAttributes="Bold" />
+            <Label Text="Stadt" Grid.Column="9" FontAttributes="Bold" />
+            <Label Text="Land" Grid.Column="10" FontAttributes="Bold" />
+        </Grid>
+        <CollectionView ItemsSource="{Binding Employees}" SelectionMode="Single"
+                SelectedItem="{Binding SelectedEmployee}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" x:DataType="{x:Type models:Employee}" ColumnDefinitions="*,40,*,*,*,*,*,*,*,*,*"
+                            ColumnSpacing="10">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Entry Grid.Column="0" Text="{Binding Login}" />
+                        <Entry Grid.Column="1" Text="{Binding FirstName}" />
+                        <Entry Grid.Column="2" Text="{Binding LastName}" />
+                        <Entry Grid.Column="3" Text="{Binding PhoneNumber}" />
+                        <Entry Grid.Column="4" Text="{Binding Address.AddressLine1}" />
+                        <Entry Grid.Column="5" Text="{Binding Address.AddressLine2}" />
+                        <Entry Grid.Column="6" Text="{Binding Address.AddressLine3}" />
+                        <Entry Grid.Column="7" Text="{Binding Address.Street}" />
+                        <Entry Grid.Column="8" Text="{Binding Address.HouseNumber}" />
+                        <Entry Grid.Column="9" Text="{Binding Address.City}" />
+                        <Entry Grid.Column="10" Text="{Binding Address.Country}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Text="Änderungen speichern" Command="{Binding SaveChangesCommand}" />
+        <Button Text="Ausgewählten Mitarbeiter löschen" BackgroundColor="PaleVioletRed"
+                Command="{Binding DeleteEmployeeCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -12,10 +12,6 @@
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Projekt">
             <MenuFlyoutItem Text="Projekt hinzufügen" Clicked="OnAddProjectClicked" />
-            <MenuFlyoutItem Text="Öffnen" Clicked="NotImplementedWarning" />
-            <MenuFlyoutSeparator />
-            <MenuFlyoutItem Text="Speichern" Clicked="NotImplementedWarning" />
-            <MenuFlyoutItem Text="Speichern unter" Clicked="NotImplementedWarning" />
             <MenuFlyoutSeparator />
             <MenuFlyoutItem Text="Rechnung erstellen" Clicked="NotImplementedWarning" />
             <MenuFlyoutSeparator />
@@ -29,6 +25,7 @@
 
         <MenuBarItem Text="Mitarbeiter">
             <MenuFlyoutItem Text="Mitarbeiter hinzufügen" Clicked="OnAddEmployeeClicked" />
+            <MenuFlyoutItem Text="Mitarbeiter bearbeiten" Clicked="OnShowEmployeesClicked" />
         </MenuBarItem>
     </ContentPage.MenuBarItems>
 
