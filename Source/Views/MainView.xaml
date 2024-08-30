@@ -39,10 +39,6 @@
 
             <!-- Project Overview Layout-->
             <VerticalStackLayout Grid.Column="0" Padding="20">
-                <Label Text="{Binding Error.Message}" TextColor="DarkRed"
-                        IsVisible="{Binding Error.HasMessage}" />
-                <Label Text="{Binding Status.Message}" TextColor="DarkGreen"
-                        IsVisible="{Binding Status.HasMessage}" />
                 <Label Text="Projektübersicht" FontSize="Title" />
                 <Grid Padding="10" ColumnSpacing="10" ColumnDefinitions="*,*,*,*,*,*">
                     <Label Text="Name" Grid.Column="0" FontAttributes="Bold" />
@@ -90,7 +86,7 @@
             </VerticalStackLayout>
 
             <!-- Project Details Layout -->
-            <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
+            <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20"
                     IsVisible="{Binding HasProject}">
                 <Label Grid.Row="0" Text="{Binding Path=SelectedProject.Name, StringFormat='Detailinformationen: {0}'}"
                         FontSize="18" FontAttributes="Bold" />
@@ -142,8 +138,8 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
                 <Button Grid.Row="9" Text="Ordnerstruktur erzeugen" Command="{Binding CreateFolderStructureCommand}" />
+                <Button Grid.Row="10" Text="Projektordner archivieren" Command="{Binding ArchiveCommand}" />
             </Grid>
         </Grid>
-
     </ScrollView>
 </ContentPage>

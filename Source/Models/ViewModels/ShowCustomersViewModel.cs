@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Core.Extensions;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +11,6 @@ namespace SCsProjectMaster.Source.Models.ViewModels;
 
 internal partial class ShowCustomersViewModel : ObservableObject
 {
-    public MessageViewModel Status { get; }
-    public MessageViewModel Error { get; }
-
     [ObservableProperty]
     private ObservableCollection<Customer> _customers;
     [ObservableProperty]
@@ -20,13 +18,10 @@ internal partial class ShowCustomersViewModel : ObservableObject
 
     public ShowCustomersViewModel()
     {
-        Status = new MessageViewModel();
-        Error = new MessageViewModel();
-
-        LoadCustomers();
+        Load();
     }
 
-    private void LoadCustomers()
+    private void Load()
     {
         using DatabaseContext db = new();
         try
@@ -35,36 +30,30 @@ internal partial class ShowCustomersViewModel : ObservableObject
         }
         catch (Exception)
         {
-            Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
+            Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
     }
 
     [RelayCommand]
-    private void SaveChanges()
+    private async Task SaveChanges()
     {
-        Status.Message = "";
-        Error.Message = "";
-
         using DatabaseContext db = new();
         try
         {
             db.Customers.UpdateRange(Customers);
             db.SaveChanges();
-            Status.Message = "Änderungen gespeichert";
+            await Toast.Make("Info: Änderungen gespeichert.").Show();
         }
         catch (Exception)
         {
-            Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
+            await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
-        LoadCustomers();
+        Load();
     }
 
     [RelayCommand]
-    private void DeleteCustomer()
+    private async Task DeleteCustomer()
     {
-        Status.Message = "";
-        Error.Message = "";
-
         using DatabaseContext db = new();
         try
         {
@@ -77,13 +66,14 @@ internal partial class ShowCustomersViewModel : ObservableObject
             db.ChangeTracker.DetectChanges();
             Debug.WriteLine(db.ChangeTracker.DebugView.LongView);
             db.SaveChanges();
-            Status.Message = "Kunde gelöscht";
+            await Toast.Make("Info: Kunde gelöscht").Show();
         }
         catch (Exception)
         {
-            Error.Message = "Fehler beim löschen. Kunde evtl. Teil eines Projektes oder Internetverbindung überprüfen!";
+            await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
+            // TODO Fehler: Kunde an Projekt beteiligt
         }
-        LoadCustomers();
+        Load();
     }
 }
 

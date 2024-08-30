@@ -11,13 +11,9 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20">
-            <Label Grid.Row="0" Text="{Binding Error.Message}" TextColor="DarkRed"
-                    IsVisible="{Binding Error.HasMessage}" />
-            <Label Grid.Row="1" Text="{Binding Status.Message}" TextColor="DarkGreen"
-                    IsVisible="{Binding Status.HasMessage}" />
-            <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
-                    ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20" Padding="20">
+            <Grid Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
+                    ColumnDefinitions="Auto,*" ColumnSpacing="10">
                 <Label Grid.Row="0" Grid.Column="0" Text="Projektname*:" />
                 <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Project.Name}" />
                 <Label Grid.Row="1" Grid.Column="0" Text="Typ:" />
@@ -40,7 +36,7 @@
                 <Label Grid.Row="7" Grid.Column="0" Text="Ansprechpartner*:" />
                 <Picker Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Employees}"
                         SelectedItem="{Binding SelectedEmployee}" ItemDisplayBinding="{Binding FirstName}">
-                    <!-- <Picker.ItemDisplayBinding> admin hat kein Nachname und macht somit Probleme TargetNullValue geht auch nicht
+                    <!-- <Picker.ItemDisplayBinding> admin hat kein Nachname und macht somit Probleme TargetNullValue geht auch nicht TODO
                         <MultiBinding StringFormat="{}{0} {1}">
                             <Binding Path="FirstName" />
                             <Binding Path="LastName" />
@@ -48,8 +44,8 @@
                     </Picker.ItemDisplayBinding> -->
                 </Picker>
             </Grid>
-            <Label Grid.Row="3" Grid.Column="0" Text="Projektteam:" />
-            <CollectionView Grid.Row="4" ItemsSource="{Binding Employees}" SelectionMode="Multiple"
+            <Label Grid.Row="1" Grid.Column="0" Text="Projektteam:" />
+            <CollectionView Grid.Row="2" ItemsSource="{Binding Employees}" SelectionMode="Multiple"
                     SelectedItems="{Binding SelectedEmployees}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -66,9 +62,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Grid.Row="5" Grid.Column="0" Text="Sonstige Informationen:" />
-            <Editor Grid.Row="6" Grid.Column="0" Text="{Binding Project.OtherInformation}" AutoSize="TextChanges" />
-            <Button Grid.Row="7" Text="Hinzufügen" Command="{Binding AddCommand}" />
+            <Label Grid.Row="3" Grid.Column="0" Text="Sonstige Informationen:" />
+            <Editor Grid.Row="4" Grid.Column="0" Text="{Binding Project.OtherInformation}" AutoSize="TextChanges" />
+            <Button Grid.Row="5" Text="Hinzufügen" Command="{Binding AddCommand}" />
         </Grid>
     </ScrollView>
 </ContentPage>

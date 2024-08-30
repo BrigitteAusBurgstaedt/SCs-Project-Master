@@ -1,15 +1,8 @@
 ﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace SCsProjectMaster.Source.Models.ViewModels;
 
@@ -36,10 +29,10 @@ internal partial class SettingsViewModel : ObservableObject
         if (result.IsSuccessful)
         {
             Configuration.SaveConfiguration(result.Folder.Path);
-            await Toast.Make("Konfiguration gespeichert.", ToastDuration.Short).Show(CancellationToken.None);
+            await Toast.Make("Konfiguration gespeichert.").Show();
             return;
         }
-        await Toast.Make("Konfiguration nicht gespeichert.", ToastDuration.Short).Show(CancellationToken.None);
+        await Toast.Make("Konfiguration nicht gespeichert.").Show();
     }
 
     [RelayCommand]
@@ -53,17 +46,17 @@ internal partial class SettingsViewModel : ObservableObject
                 if (result.FileName.EndsWith("xml", StringComparison.OrdinalIgnoreCase))
                 {
                     Configuration.LoadConfiguration(result.FullPath);
-                    await Toast.Make("Konfiguration erfolgreich geladen.", ToastDuration.Short).Show(CancellationToken.None);
+                    await Toast.Make("Konfiguration erfolgreich geladen.").Show();
                     Configuration = Configuration.GetConfiguration();
                     return;
                 }
-                await Toast.Make("Bitte wählen sie eine XML-Datei.", ToastDuration.Short).Show(CancellationToken.None);
+                await Toast.Make("Bitte wählen sie eine XML-Datei.").Show();
             }
-            await Toast.Make("Konfiguration nicht geladen.", ToastDuration.Short).Show(CancellationToken.None);
+            await Toast.Make("Konfiguration nicht geladen.").Show();
         }
         catch (Exception)
         {
-            await Toast.Make("Fehler: Datei konnte nicht gelesen werden. Bitte erneut versuchen.", ToastDuration.Short).Show(CancellationToken.None);
+            await Toast.Make("Fehler: Datei konnte nicht gelesen werden. Bitte erneut versuchen.").Show();
         }
         
     }

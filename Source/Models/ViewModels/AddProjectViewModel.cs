@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +8,6 @@ namespace SCsProjectMaster.Source.Models.ViewModels;
 
 internal partial class AddProjectViewModel : ObservableObject
 {
-    public MessageViewModel Status { get; }
-    public MessageViewModel Error { get; }
-
     [ObservableProperty]
     private Project _project = new();
 
@@ -36,9 +34,6 @@ internal partial class AddProjectViewModel : ObservableObject
 
     public AddProjectViewModel()
     {
-        Status = new MessageViewModel();
-        Error = new MessageViewModel();
-
         using DatabaseContext db = new();
         try
         {
@@ -47,25 +42,22 @@ internal partial class AddProjectViewModel : ObservableObject
         }
         catch (Exception)
         {
-            Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
+            Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
     }
 
     [RelayCommand]
-    private void Add()
+    private async Task Add()
     {
-        Error.Message = "";
-        Status.Message = "";
-
         if (Project.Name == "")
         {
-            Error.Message = "Fehler: Projektname darf nicht leer sein.";
+            await Toast.Make("Fehler: Projektname ist leer. Geben sie dem Projekt einen Namen.").Show();
             return;
         }
 
         if (SelectedCustomer == null || SelectedEmployee == null)
         {
-            Error.Message = "Fehler: Eingabe überprüfen. Kunde und Ansprechpartner dürfen nicht leer sein.";
+            await Toast.Make("Fehler: Kunde bzw. Ansprechpartner sind leer. Eingabe überprüfen.").Show();
             return;
         }
 
@@ -89,12 +81,12 @@ internal partial class AddProjectViewModel : ObservableObject
             }
             db.Projects.Add(Project);
             db.SaveChanges();
-            Status.Message = "Projekt hinzugefügt";
+            await Toast.Make("Info: Projekt hinzugefügt").Show();
             Project = new Project();
         }
         catch (Exception)
         {
-            Error.Message = "Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.";
+            await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
     }
 }

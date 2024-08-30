@@ -7,9 +7,6 @@
         Title="Kunden bearbeiten">
 
     <VerticalStackLayout Padding="10">
-        <Label Text="{Binding Error.Message}" TextColor="DarkRed" IsVisible="{Binding Error.HasMessage}" />
-        <Label Text="{Binding Status.Message}" TextColor="DarkGreen" IsVisible="{Binding Status.HasMessage}" />
-
         <!-- CollectionView Header Ersatz da dieser nicht angezeigt wird -->
         <Grid Padding="10" ColumnSpacing="10" ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*,*">
             <Label Text="Name" Grid.Column="0" FontAttributes="Bold" />

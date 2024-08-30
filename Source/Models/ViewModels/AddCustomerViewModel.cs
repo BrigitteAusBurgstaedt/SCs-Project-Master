@@ -1,41 +1,32 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace SCsProjectMaster.Source.Models.ViewModels;
 
 internal partial class AddCustomerViewModel : ObservableObject
 {
-    public MessageViewModel Status { get; }
-    public MessageViewModel Error { get; }
-
     [ObservableProperty]
     private Address _address = new();
     [ObservableProperty]
     private Customer _customer = new();
 
-    public AddCustomerViewModel()
-    {
-        Error = new MessageViewModel();
-        Status = new MessageViewModel();
-    }
+    public AddCustomerViewModel() { }
 
     [RelayCommand]
-    private void SaveChanges()
+    private async Task SaveChanges()
     {
-        Error.Message = "";
-        Status.Message = "";
-
         using DatabaseContext db = new();
         try
         {
             Customer.Address = Address;
             db.Customers.Add(Customer);
             db.SaveChanges();
-            Status.Message = "Kunde hinzugefügt";
+            await Toast.Make("Info: Kunde hinzugefügt.").Show();
         }
         catch (Exception)
         {
-            Error.Message = "Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.";
+            await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SCsProjectMaster.Source.Logic;
 
@@ -6,9 +7,6 @@ namespace SCsProjectMaster.Source.Models.ViewModels;
 
 internal partial class AddEmployeeViewModel : ObservableObject
 {
-    public MessageViewModel Status { get; }
-    public MessageViewModel Error { get; }
-
     [ObservableProperty]
     private Address _address = new();
 
@@ -18,18 +16,11 @@ internal partial class AddEmployeeViewModel : ObservableObject
     [ObservableProperty]
     private string _password;
 
-    public AddEmployeeViewModel()
-    {
-        Error = new MessageViewModel();
-        Status = new MessageViewModel();
-    }
+    public AddEmployeeViewModel() { }
 
     [RelayCommand]
-    private void SaveChanges()
+    private async Task SaveChanges()
     {
-        Error.Message = "";
-        Status.Message = "";
-
         Employee.Address = Address;
         Employee.PasswordHash = LoginTool.HashPassword(Password, out string salt);
         Employee.PasswordSalt = salt;
@@ -38,13 +29,13 @@ internal partial class AddEmployeeViewModel : ObservableObject
 
         if (Employee.Login == "")
         {
-            Error.Message = "Fehler: Login darf nicht leer sein und muss einzigartig sein.";
+            await Toast.Make("Fehler: Login darf nicht leer sein und muss einzigartig sein.").Show();
             return;
         }
 
         if (Employee.PhoneNumber == "")
         {
-            Error.Message = "Fehler: Telefonnummer darf nicht leer sein.";
+            await Toast.Make("Fehler: Telefonnummer darf nicht leer sein.").Show();
             return;
         }
 
@@ -53,11 +44,11 @@ internal partial class AddEmployeeViewModel : ObservableObject
         {
             db.Employees.Add(Employee);
             db.SaveChanges();
-            Status.Message = "Mitarbeiter hinzugefügt";
+            await Toast.Make("Info: Mitarbeiter hinzugefügt.").Show();
         }
         catch (Exception)
         {
-            Error.Message = "Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.";
+            await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
 
     }

@@ -5,8 +5,6 @@
         Title="Kunde hinzufügen">
     <ScrollView>
         <VerticalStackLayout Padding="20">
-            <Label Text="{Binding Error.Message}" TextColor="DarkRed" IsVisible="{Binding Error.HasMessage}" />
-            <Label Text="{Binding Status.Message}" TextColor="DarkGreen" IsVisible="{Binding Status.HasMessage}" />
             <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10"
                     ColumnDefinitions="Auto,*" ColumnSpacing="10">
                 <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="Name:" />

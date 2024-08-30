@@ -11,9 +11,6 @@ namespace SCsProjectMaster.Source.Models.ViewModels;
 
 internal partial class MainViewModel : ObservableObject
 {
-    public MessageViewModel Status { get; }
-    public MessageViewModel Error { get; }
-
     [ObservableProperty]
     private ObservableCollection<Project> _projects;
 
@@ -31,18 +28,15 @@ internal partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        Status = new MessageViewModel();
-        Error = new MessageViewModel();
-
-        LoadItems();
+        Load();
     }
 
     public void MainView_Appearing(object sender, EventArgs e)
     {
-        LoadItems();
+        Load();
     }
 
-    private void LoadItems()
+    private void Load()
     {
         Configuration = Configuration.GetConfiguration();
         using DatabaseContext db = new();
@@ -52,36 +46,30 @@ internal partial class MainViewModel : ObservableObject
         }
         catch (Exception)
         {
-            Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
+            Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
     }
 
     [RelayCommand]
-    private void SaveChanges()
+    private async Task SaveChanges()
     {
-        Status.Message = "";
-        Error.Message = "";
-
         using DatabaseContext db = new();
         try
         {
             db.Update(SelectedProject);
             db.SaveChanges();
-            Status.Message = "Änderung gespeichert";
+            await Toast.Make("Info: Änderungen gespeichert").Show();
         }
         catch (Exception)
         {
-            Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
+            await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
         }
-        LoadItems();
+        Load();
     }
 
     [RelayCommand]
-    private void DeleteProject()
+    private async Task DeleteProject()
     {
-        Status.Message = "";
-        Error.Message = "";
-
         using DatabaseContext db = new();
         try
         {
@@ -105,14 +93,14 @@ internal partial class MainViewModel : ObservableObject
             // db.ChangeTracker.DetectChanges();
             // Debug.WriteLine(db.ChangeTracker.DebugView.LongView);
             db.SaveChanges();
-            Status.Message = "Projekt gelöscht";
+            await Toast.Make("Info: Projekt gelöscht").Show();
         }
         catch (Exception)
         {
-            Error.Message = "Fehler beim Zugriff auf die Datenbank. Internetverbindung überprüfen!";
+            await Toast.Make("Fehler: Zugriff auf die Datenbank nicht möglich. Internetverbindung überprüfen.").Show();
             throw;
         }
-        LoadItems();
+        Load();
     }
 
     [RelayCommand]
@@ -121,10 +109,24 @@ internal partial class MainViewModel : ObservableObject
         try
         {
             SelectedProject.CreateFolderStructure(SelectedFolderPreset.Root);
-            await Toast.Make("Ordnerstruktur erstellt", ToastDuration.Short).Show(CancellationToken.None);
-        } catch (Exception)
+            await Toast.Make("Info: Ordnerstruktur erstellt.").Show();
+        }
+        catch (Exception)
         {
-            await Toast.Make("Fehler: Ordnerstruktur konnte nicht erstellt werden", ToastDuration.Short).Show(CancellationToken.None);
+            await Toast.Make("Fehler: Ordnerstruktur konnte nicht erstellt werden.").Show();
+        }
+    }
+
+    [RelayCommand]
+    private async Task Archive()
+    {
+        try
+        {
+            SelectedProject.Archive();
+            await Toast.Make("Info: Projekt wurde archiviert.").Show();
+        }
+        catch (Exception) {
+            await Toast.Make("Fehler: Projekt konnte nicht archiviert werden").Show();
         }
     }
 

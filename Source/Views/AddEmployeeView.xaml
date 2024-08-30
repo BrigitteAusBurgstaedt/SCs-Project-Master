@@ -37,11 +37,6 @@
                 <Label VerticalOptions="Center" Grid.Row="10" Grid.Column="0" Text="Stadt:" />
                 <Entry VerticalOptions="Center" Grid.Row="10" Grid.Column="1" Placeholder="Bitte Text eingeben" Text="{Binding Address.City}" />
             </Grid>
-
-            <Label Text="{Binding Error.Message}" TextColor="DarkRed"
-                    IsVisible="{Binding Error.HasMessage}" />
-            <Label Text="{Binding Status.Message}" TextColor="DarkGreen"
-                    IsVisible="{Binding Status.HasMessage}" />
             <Button Grid.Row="11" Text="Mitarbeiter Hinzufügen" Command="{Binding SaveChangesCommand}" />
         </VerticalStackLayout>
     </ScrollView>
