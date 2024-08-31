@@ -43,7 +43,7 @@ internal partial class AddInvoiceViewModel : ObservableObject
     {
         for (int i = 0; i < InvoiceItems.Length; i++)
         {
-            if (InvoiceItems[i].Position != 0) // TODO überprüfen
+            if (InvoiceItems[i].Position != 0)
             {
                 Invoice.InvoiceItems.Add(InvoiceItems[i]);
             }

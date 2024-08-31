@@ -24,9 +24,9 @@ internal partial class LoginViewModel : ObservableObject
             Employee user = db.Employees.First(e => e.Login == LoginString);
             if (LoginTool.VerifyHashedPassword(user.PasswordHash, Password, user.PasswordSalt))
             {
-                Configuration config = Configuration.GetConfiguration();
-                config.Login = LoginString;
-                Configuration.SetConfiguration(config);
+                // Configuration config = Configuration.GetConfiguration();
+                // config.Login = LoginString;
+                // Configuration.SetConfiguration(config);
                 await Toast.Make("Info: Erfolgreich angemeldet.").Show();
                 LoginCompleted?.Invoke(this, EventArgs.Empty);
                 return;

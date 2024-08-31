@@ -29,8 +29,8 @@ public partial class Invoice
             worksheet.Cell("G7").Value = Number;
             worksheet.Cell("G8").Value = CreationDate?.ToString("dd.MM.yyyy");
 
-            // Positionen starten ab Zeile 25
-            int currentRow = 25;
+            // Positionen starten ab Zeile 26
+            int currentRow = 26;
 
             foreach (var item in InvoiceItems)
             {

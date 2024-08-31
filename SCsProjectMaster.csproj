@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -22,17 +21,27 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<DefaultLanguage>de</DefaultLanguage>
+		<PackageCertificateKeyFile>SCsProjectMaster_TemporaryKey.pfx</PackageCertificateKeyFile>
+		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<AppInstallerUri>C:\Users\robin\Downloads</AppInstallerUri>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\sc_logo.png" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -52,76 +61,71 @@
 		<PackageReference Include="ClosedXML" Version="0.102.3" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
-		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
-		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+		<PackageReference Include="System.Text.Json" Version="8.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Source\Views\AddInvoiceView.xaml.cs">
-	    <DependentUpon>AddInvoiceView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Source\Views\AddEmployeeView.xaml.cs">
-	    <DependentUpon>AddEmployeeView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Source\Views\AddCustomerView.xaml.cs">
-	    <DependentUpon>AddCustomerView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Source\Views\MainView.xaml.cs">
-	    <DependentUpon>MainView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Source\Views\SettingsView.xaml.cs">
-	    <DependentUpon>SettingsView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Source\Views\ShowEmployeesView.xaml.cs">
-	    <DependentUpon>ShowEmployeesView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Source\Views\ShowCustomersView.xaml.cs">
-	    <DependentUpon>ShowCustomersView.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="Source\Views\AddInvoiceView.xaml.cs">
+			<DependentUpon>AddInvoiceView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Source\Views\AddEmployeeView.xaml.cs">
+			<DependentUpon>AddEmployeeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Source\Views\AddCustomerView.xaml.cs">
+			<DependentUpon>AddCustomerView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Source\Views\MainView.xaml.cs">
+			<DependentUpon>MainView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Source\Views\SettingsView.xaml.cs">
+			<DependentUpon>SettingsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Source\Views\ShowEmployeesView.xaml.cs">
+			<DependentUpon>ShowEmployeesView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Source\Views\ShowCustomersView.xaml.cs">
+			<DependentUpon>ShowCustomersView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Source\Views\LoginView.xaml.cs">
+			<DependentUpon>LoginView.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Source\Views\AddInvoiceView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\AddEmployeeView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\AddCustomerView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\AddProjectView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\LoginView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\SettingsView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\ShowEmployeesView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\ShowCustomersView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Source\Views\AddInvoiceView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Source\Views\AddEmployeeView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Source\Views\AddCustomerView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Source\Views\AddProjectView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Source\Views\LoginView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Source\Views\SettingsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Source\Views\ShowEmployeesView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Source\Views\ShowCustomersView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Resources\Data\config.xml">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Resources\Data\vorlage_rechnung.xlsx">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
+		<None Update="Resources\Data\config.xml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Resources\Data\vorlage_rechnung.xlsx">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

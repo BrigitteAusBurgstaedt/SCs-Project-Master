@@ -25,7 +25,7 @@
                 SelectedItem="{Binding SelectedEmployee}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="10" x:DataType="{x:Type models:Employee}" ColumnDefinitions="*,40,*,*,*,*,*,*,*,*,*"
+                    <Grid Padding="10" x:DataType="{x:Type models:Employee}" ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*"
                             ColumnSpacing="10">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="CommonStates">

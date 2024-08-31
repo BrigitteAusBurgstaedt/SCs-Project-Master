@@ -45,6 +45,9 @@ internal partial class AddEmployeeViewModel : ObservableObject
             db.Employees.Add(Employee);
             db.SaveChanges();
             await Toast.Make("Info: Mitarbeiter hinzugefügt.").Show();
+            Address = new Address();
+            Employee = new Employee();
+            Password = "";
         }
         catch (Exception)
         {

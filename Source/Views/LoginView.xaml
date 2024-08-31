@@ -1,43 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SCsProjectMaster.Source.Views.LoginView"
-             xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels" x:DataType="vm:LoginViewModel"
-             Title="Anmelden">
-    
-    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="30" >
-        <Label Text="Willkommen"  
-                   FontSize="24"  
-                   HorizontalOptions="Center"  
-                   VerticalOptions="StartAndExpand" />
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SCsProjectMaster.Source.Views.LoginView"
+        xmlns:vm="clr-namespace:SCsProjectMaster.Source.Models.ViewModels" x:DataType="vm:LoginViewModel"
+        Title="Anmelden">
 
-        <Label Text="Benutzername"  
-                   FontSize="18"  
-                    FontAttributes="Bold"
-                   VerticalOptions="CenterAndExpand" />
-        <Entry      Text="{Binding LoginString}"
-                   Placeholder="Geben Sie Ihren Benutzernamen ein"  
-                   VerticalOptions="CenterAndExpand" />
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="30" Spacing="10">
 
-        <Label Text="Passwort"  
-                   FontSize="18"  
-                    FontAttributes="Bold"
-                   VerticalOptions="CenterAndExpand" />
-        <Entry      Text="{Binding Password}"
-                   Placeholder="Geben Sie Ihr Passwort ein"  
-                   IsPassword="True"  
-                   VerticalOptions="CenterAndExpand" />
+        <Label Text="Willkommen" FontSize="Header" HorizontalOptions="Center" VerticalOptions="StartAndExpand" />
 
-        <Button Text="Anmelden"
-                    Command="{Binding LoginCommand}"
-                    FontSize="18"  
-                    VerticalOptions="CenterAndExpand"  
-                     />
+        <Label Text="Benutzername" FontSize="18" FontAttributes="Bold" VerticalOptions="CenterAndExpand" />
+        <Entry Text="{Binding LoginString}" Placeholder="Geben Sie Ihren Benutzernamen ein"
+                VerticalOptions="CenterAndExpand" />
 
+        <Label Text="Passwort" FontSize="18" FontAttributes="Bold" VerticalOptions="CenterAndExpand" />
+        <Entry Text="{Binding Password}" Placeholder="Geben Sie Ihr Passwort ein" IsPassword="True"
+                VerticalOptions="CenterAndExpand" />
 
-        <Label Text="Logindaten für Testzwecke: Benutzername = testnutzer, Passwort = passwort"  
-                   VerticalOptions="EndAndExpand" />
+        <Button Text="Anmelden" Command="{Binding LoginCommand}" FontSize="18" VerticalOptions="CenterAndExpand" />
+
+        <Label Text="Logindaten für Testzwecke: Benutzername = testnutzer, Passwort = passwort"
+                VerticalOptions="EndAndExpand" />
 
     </VerticalStackLayout>
 </ContentPage>
-<Frame></Frame>

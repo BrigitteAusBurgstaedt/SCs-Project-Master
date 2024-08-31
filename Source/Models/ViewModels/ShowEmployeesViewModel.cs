@@ -12,7 +12,7 @@ internal partial class ShowEmployeesViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Employee> _employees;
     [ObservableProperty]
-    private Employee _selecteEmployee;
+    private Employee _selectedEmployee;
 
     public ShowEmployeesViewModel()
     {
@@ -50,12 +50,12 @@ internal partial class ShowEmployeesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task DeleteCustomer()
+    private async Task DeleteEmployee()
     {
         using DatabaseContext db = new();
         try
         {
-            Employee employee = db.Employees.Include(c => c.Address).First(c => c.Login == SelectedEmployee.Id);
+            Employee employee = db.Employees.Include(c => c.Address).First(c => c.Login == SelectedEmployee.Login);
             Address address = db.Addresses.Include(a => a.Employees).First(a => a.Id == employee.Address.Id);
             // TODO handle Address
             employee.Address = null;

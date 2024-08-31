@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace SCsProjectMaster.Source.Logic;

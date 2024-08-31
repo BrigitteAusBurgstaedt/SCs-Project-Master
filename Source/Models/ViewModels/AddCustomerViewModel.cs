@@ -23,6 +23,8 @@ internal partial class AddCustomerViewModel : ObservableObject
             db.Customers.Add(Customer);
             db.SaveChanges();
             await Toast.Make("Info: Kunde hinzugefügt.").Show();
+            Address = new Address();
+            Customer = new Customer();
         }
         catch (Exception)
         {

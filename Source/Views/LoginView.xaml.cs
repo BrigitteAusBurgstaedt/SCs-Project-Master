@@ -4,13 +4,13 @@ namespace SCsProjectMaster.Source.Views;
 
 public partial class LoginView : ContentPage
 {
-	public LoginView()
-	{
-		InitializeComponent();
-		LoginViewModel viewModel = new LoginViewModel();
+    public LoginView()
+    {
+        InitializeComponent();
+        LoginViewModel viewModel = new LoginViewModel();
         viewModel.LoginCompleted += ViewModel_LoginCompleted;
-		BindingContext = viewModel;
-}
+        BindingContext = viewModel;
+    }
 
     private async void ViewModel_LoginCompleted(object sender, EventArgs e)
     {

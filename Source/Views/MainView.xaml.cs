@@ -40,6 +40,11 @@ public partial class MainView : ContentPage
         await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(AddProjectView));
     }
 
+    private async void OnAddInvoiceClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(MainView) + "/" + nameof(AddInvoiceView));
+    }
+
     private async void NotImplementedWarning(object sender, EventArgs e)
     {
         await DisplayAlert("Obacht!", "Diese Funktion wurde nocht nicht implementiert", "OK");
